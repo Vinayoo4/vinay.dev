@@ -4,18 +4,18 @@ import { Calendar, ArrowRight } from "lucide-react";
 const experiences = [
   {
     title: "Senior Full Stack Developer",
-    company: "Tech Innovators Inc.",
+    company: "Shreenandi Marketing",
     period: "2021 - Present",
     description: "Leading development of enterprise-scale applications using modern technologies.",
     achievements: [
       "Reduced application load time by 60%",
-      "Implemented microservices architecture",
-      "Mentored junior developers"
+      "Helped in Implementing Fast Business Scaling Strategies",
+      "Gained experience in digital marketing"
     ]
   },
   {
     title: "Full Stack Developer",
-    company: "Digital Solutions Ltd.",
+    company: "Photofactory0707",
     period: "2019 - 2021",
     description: "Developed and maintained multiple client projects using React and Node.js.",
     achievements: [
