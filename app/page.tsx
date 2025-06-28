@@ -199,7 +199,7 @@ export default function Home() {
             <div className="mt-8 flex justify-center space-x-4">
               {[
                 { icon: Github, href: "https://github.com/Vinayoo4" },
-                { icon: Linkedin, href: "https://linkedin.com/vinayyadav36" },
+                { icon: Linkedin, href: "https://linkedin.com/in/vinay-yadav-dev" },
                 { icon: Mail, href: "mailto:dev.webstylevinay9994@gmail.com" },
               ].map(({ icon: Icon, href }) => (
                 <motion.a
