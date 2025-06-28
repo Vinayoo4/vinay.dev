@@ -160,6 +160,50 @@ const toolCategories: Record<string, CategoryData> = {
       }
     ]
   },
+  "Personal WebApps": {
+    icon: FiStar,
+    color: "from-orange-400 to-orange-600",
+    tools: [
+      {
+        title: "Shree Nandi Marketing",
+        description: "A comprehensive web application for a marketing agency, featuring interactive 3D visuals and modern design.",
+        link: "https://shreenandimarketing.netlify.app",
+        tags: ["Three.js", "JavaScript", "WebGL", "Marketing"],
+        type: "web",
+        features: ["3D Interactive Visuals", "Modern UI/UX", "Responsive Design", "Marketing Tools"],
+        relatedTools: [
+          { name: "Three.js", link: "https://threejs.org", type: "3D Graphics" },
+          { name: "WebGL", link: "https://webgl.org", type: "Graphics API" },
+          { name: "Framer Motion", link: "https://framer.com/motion", type: "Animation" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-22",
+          downloads: "3.8k+",
+          rating: "4.9/5",
+          adminNotes: "Showcase project with advanced 3D features. Excellent for demonstrating technical skills."
+        }
+      },
+      {
+        title: "Me - Personal Portfolio",
+        description: "A modern personal portfolio website built with Next.js and Vue.js, showcasing professional work and skills.",
+        link: "https://me-sigma-red.vercel.app/",
+        tags: ["Next.js", "Vue.js", "Portfolio", "Resume"],
+        type: "web",
+        features: ["Modern Design", "Responsive Layout", "Interactive Elements", "SEO Optimized"],
+        relatedTools: [
+          { name: "Next.js", link: "https://nextjs.org", type: "React Framework" },
+          { name: "Vue.js", link: "https://vuejs.org", type: "JavaScript Framework" },
+          { name: "Vercel", link: "https://vercel.com", type: "Deployment" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-25",
+          downloads: "2.1k+",
+          rating: "4.7/5",
+          adminNotes: "Personal portfolio showcasing modern web development skills. Great for professional networking."
+        }
+      }
+    ]
+  },
   "Development Tools": {
     icon: FiCode,
     color: "from-green-400 to-green-600",
