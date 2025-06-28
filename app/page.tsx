@@ -16,7 +16,7 @@ import ContactSection from "@/components/ContactSection";
 
 function TypingEffect() {
   const [displayed, setDisplayed] = useState("");
-  const fullText = "____";
+  const fullText = "_____";
   const index = useRef(0);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function TypingEffect() {
           setDisplayed((prev) => prev + fullText.charAt(index.current));
           index.current += 1;
         }
-      }, 120);
+      }, 150); // Slightly slower for better readability
       return () => clearTimeout(timeout);
     }
   }, [displayed]);
