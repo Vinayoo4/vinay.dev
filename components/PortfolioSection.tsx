@@ -216,7 +216,7 @@ const toolCategories: Record<string, CategoryData> = {
         type: "github",
         features: ["Random Password Generation", "Customizable Length", "Multiple Character Sets", "Security Focused"],
         relatedTools: [
-          { name: "KeePass", link: "https://keepass.info", type: "Password Manager" },
+          { name: "Awesome Python", link: "https://github.com/vinta/awesome-python", type: "Python Repositories" },
           { name: "LastPass", link: "https://lastpass.com", type: "Password Manager" },
           { name: "1Password", link: "https://1password.com", type: "Password Manager" }
         ],
@@ -237,13 +237,13 @@ const toolCategories: Record<string, CategoryData> = {
         relatedTools: [
           { name: "grep", link: "https://www.gnu.org/software/grep/", type: "Text Search" },
           { name: "ripgrep", link: "https://github.com/BurntSushi/ripgrep", type: "Fast Search" },
-          { name: "VS Code", link: "https://code.visualstudio.com", type: "Code Editor" }
+          { name: "TensorFlow", link: "https://github.com/tensorflow/tensorflow", type: "TensorFlow Repositories" }
         ],
         additionalInfo: {
           lastUpdated: "2024-01-18",
           stars: "1",
           forks: "0",
-          adminNotes: "Useful for code refactoring and text analysis. Add regex support."
+          adminNotes: "Useful for text analysis. Add regex support."
         }
       },
       {
