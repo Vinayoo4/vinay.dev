@@ -204,6 +204,164 @@ const toolCategories: Record<string, CategoryData> = {
       }
     ]
   },
+  "Python Projects": {
+    icon: FiCode,
+    color: "from-green-400 to-green-600",
+    tools: [
+      {
+        title: "Simple Password Generator",
+        description: "A secure password generator built with Python, creating strong and random passwords for enhanced security.",
+        link: "https://github.com/Thelrnr/Simple_password_generator",
+        tags: ["Python", "Security", "Password Generation"],
+        type: "github",
+        features: ["Random Password Generation", "Customizable Length", "Multiple Character Sets", "Security Focused"],
+        relatedTools: [
+          { name: "KeePass", link: "https://keepass.info", type: "Password Manager" },
+          { name: "LastPass", link: "https://lastpass.com", type: "Password Manager" },
+          { name: "1Password", link: "https://1password.com", type: "Password Manager" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-20",
+          stars: "1",
+          forks: "0",
+          adminNotes: "Basic but effective password generator. Consider adding GUI interface."
+        }
+      },
+      {
+        title: "String Finder in Multiple Files",
+        description: "Python utility to search for specific strings across multiple files and directories efficiently.",
+        link: "https://github.com/Thelrnr/string_finder_in_multiple_files",
+        tags: ["Python", "File Search", "Text Processing"],
+        type: "github",
+        features: ["Multi-file Search", "Recursive Directory Scanning", "Pattern Matching", "Search Results Export"],
+        relatedTools: [
+          { name: "grep", link: "https://www.gnu.org/software/grep/", type: "Text Search" },
+          { name: "ripgrep", link: "https://github.com/BurntSushi/ripgrep", type: "Fast Search" },
+          { name: "VS Code", link: "https://code.visualstudio.com", type: "Code Editor" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-18",
+          stars: "1",
+          forks: "0",
+          adminNotes: "Useful for code refactoring and text analysis. Add regex support."
+        }
+      },
+      {
+        title: "Link Extractor",
+        description: "Web scraping tool to extract all links from a given webpage using Python and BeautifulSoup.",
+        link: "https://github.com/Thelrnr/automatic-octo-enigma",
+        tags: ["Python", "Web Scraping", "BeautifulSoup"],
+        type: "github",
+        features: ["Link Extraction", "Web Scraping", "URL Validation", "Export Options"],
+        relatedTools: [
+          { name: "BeautifulSoup", link: "https://www.crummy.com/software/BeautifulSoup/", type: "Web Scraping" },
+          { name: "Scrapy", link: "https://scrapy.org", type: "Web Scraping Framework" },
+          { name: "Selenium", link: "https://selenium.dev", type: "Web Automation" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-15",
+          stars: "1",
+          forks: "0",
+          adminNotes: "Good for web analysis and SEO research. Add filtering options."
+        }
+      },
+      {
+        title: "Watermark Adder",
+        description: "Python script to add watermarks to images and documents for copyright protection.",
+        link: "https://github.com/Thelrnr/verbose-octo-parakeet",
+        tags: ["Python", "Image Processing", "Watermark"],
+        type: "github",
+        features: ["Image Watermarking", "Text Overlay", "Position Control", "Batch Processing"],
+        relatedTools: [
+          { name: "Pillow", link: "https://python-pillow.org", type: "Image Processing" },
+          { name: "OpenCV", link: "https://opencv.org", type: "Computer Vision" },
+          { name: "GIMP", link: "https://www.gimp.org", type: "Image Editor" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-12",
+          stars: "0",
+          forks: "0",
+          adminNotes: "Essential for content creators. Add support for video watermarking."
+        }
+      },
+      {
+        title: "Battery Notification",
+        description: "System utility to monitor battery levels and send notifications when battery is low or fully charged.",
+        link: "https://github.com/Thelrnr/curly-lamp",
+        tags: ["Python", "System Monitoring", "Notifications"],
+        type: "github",
+        features: ["Battery Monitoring", "System Notifications", "Threshold Alerts", "Cross-platform"],
+        relatedTools: [
+          { name: "psutil", link: "https://pypi.org/project/psutil/", type: "System Monitoring" },
+          { name: "plyer", link: "https://pypi.org/project/plyer/", type: "Notifications" },
+          { name: "BatteryBar", link: "https://batterybarpro.com", type: "Battery Monitor" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-10",
+          stars: "0",
+          forks: "0",
+          adminNotes: "Useful for laptop users. Add customizable notification sounds."
+        }
+      },
+      {
+        title: "WiFi Password Ejector",
+        description: "Python utility to extract and display saved WiFi passwords from the system.",
+        link: "https://github.com/Thelrnr/Wifi_password_ejector",
+        tags: ["Python", "Network", "Security"],
+        type: "github",
+        features: ["WiFi Password Recovery", "Network Analysis", "Security Testing", "System Integration"],
+        relatedTools: [
+          { name: "Wireshark", link: "https://wireshark.org", type: "Network Analysis" },
+          { name: "Nmap", link: "https://nmap.org", type: "Network Scanner" },
+          { name: "Aircrack-ng", link: "https://aircrack-ng.org", type: "WiFi Security" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-08",
+          stars: "0",
+          forks: "0",
+          adminNotes: "Important security tool. Ensure proper authorization checks."
+        }
+      },
+      {
+        title: "IP Host Finder",
+        description: "Web-based tool to find IP addresses and host information for network analysis.",
+        link: "https://github.com/Thelrnr/Ip_host_finder_webpage",
+        tags: ["Python", "Web App", "Network Tools"],
+        type: "github",
+        features: ["IP Address Lookup", "Host Information", "Web Interface", "Network Analysis"],
+        relatedTools: [
+          { name: "Flask", link: "https://flask.palletsprojects.com", type: "Web Framework" },
+          { name: "Django", link: "https://djangoproject.com", type: "Web Framework" },
+          { name: "WhatIsMyIP", link: "https://whatismyipaddress.com", type: "IP Lookup" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-05",
+          stars: "0",
+          forks: "0",
+          adminNotes: "Good for network administrators. Add geolocation features."
+        }
+      },
+      {
+        title: "Crispy Computing Machine",
+        description: "Advanced Python project showcasing various computing and automation capabilities.",
+        link: "https://github.com/Thelrnr/crispy-octo-computing-machine",
+        tags: ["Python", "Automation", "Computing"],
+        type: "github",
+        features: ["Task Automation", "System Integration", "Data Processing", "Multi-purpose"],
+        relatedTools: [
+          { name: "Automation Anywhere", link: "https://automationanywhere.com", type: "RPA" },
+          { name: "UiPath", link: "https://uipath.com", type: "RPA Platform" },
+          { name: "Zapier", link: "https://zapier.com", type: "Workflow Automation" }
+        ],
+        additionalInfo: {
+          lastUpdated: "2024-01-03",
+          stars: "0",
+          forks: "0",
+          adminNotes: "Versatile automation tool. Document use cases and examples."
+        }
+      }
+    ]
+  },
   "Development Tools": {
     icon: FiCode,
     color: "from-green-400 to-green-600",
