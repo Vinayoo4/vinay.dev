@@ -13,6 +13,7 @@ import AboutSection from "@/components/AboutSection";
 import JourneySection from "@/components/JourneySection";
 import PortfolioSection from "@/components/PortfolioSection";
 import ContactSection from "@/components/ContactSection";
+import CertificateSlider from "@/components/CertificateSlider";
 
 function TypingEffect() {
   const [displayed, setDisplayed] = useState("");
