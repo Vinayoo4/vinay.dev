@@ -177,6 +177,7 @@ export default function Home() {
       <PortfolioSection />
       <JourneySection />
       <AboutSection />
+      <CertificateSlider />
 
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <motion.div style={{ opacity }} className="absolute inset-0 pointer-events-none">
