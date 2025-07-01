@@ -21,7 +21,7 @@ export default function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-yellow-500">Professional Competencies</h2>
-          <p className="mt-4 text-gray-400">A comprehensive suite of skills designed to support robust, scalable, and innovative web solutions for modern businesses and creators.</p>
+          <p className="mt-4 text-gray-400">Hi , I am Vinay. Currently pursuing my B.Tech in Computer Science and Engineering student specializing in Artificial Intelligence and Machine Learning. A comprehensive suite of skills designed to support robust, scalable, and innovative web solutions for modern businesses and creators.</p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map(({ icon: Icon, name, items }) => (

@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CertificateSliderProps {
   images?: string[];
@@ -46,11 +47,13 @@ const isImage = (path: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(path);
 const CertificateSlider: React.FC<CertificateSliderProps> = ({ images = defaultImages }) => {
   const apiRef = useRef<CarouselApi | null>(null);
   const imageList = images.filter(isImage);
+  const [selected, setSelected] = useState(0);
 
   // Autoplay effect
   useEffect(() => {
     if (imageList.length === 0) return;
     const interval = setInterval(() => {
+      setSelected((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
       if (apiRef.current) {
         if (apiRef.current.selectedScrollSnap() === imageList.length - 1) {
           apiRef.current.scrollTo(0);
@@ -58,9 +61,16 @@ const CertificateSlider: React.FC<CertificateSliderProps> = ({ images = defaultI
           apiRef.current.scrollNext();
         }
       }
-    }, 1500);
+    }, 2000);
     return () => clearInterval(interval);
   }, [imageList]);
+
+  // Sync selected state with carousel
+  useEffect(() => {
+    if (apiRef.current) {
+      apiRef.current.scrollTo(selected);
+    }
+  }, [selected]);
 
   if (imageList.length === 0) {
     return (
@@ -77,26 +87,29 @@ const CertificateSlider: React.FC<CertificateSliderProps> = ({ images = defaultI
       <div className="relative">
         <Carousel setApi={(api) => (apiRef.current = api)}>
           <CarouselContent>
-            {imageList.map((img, idx) => (
-              <CarouselItem key={img}>
-                <div className="flex flex-col items-center justify-center">
+            <AnimatePresence mode="wait" initial={false}>
+              <CarouselItem key={imageList[selected]}>
+                <motion.div
+                  key={imageList[selected]}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ duration: 0.4, type: "spring" }}
+                  className="flex flex-col items-center justify-center"
+                >
                   <div className="rounded-xl overflow-hidden shadow-2xl border-4 border-yellow-400 bg-black flex items-center justify-center min-h-[400px] min-w-[300px]">
                     <Image
-                      src={img}
-                      alt={`Certificate ${idx + 1}`}
+                      src={imageList[selected]}
+                      alt={`Certificate ${selected + 1}`}
                       width={700}
                       height={500}
                       className="object-contain max-h-[400px] bg-black"
-                      priority={idx === 0}
+                      priority
                     />
                   </div>
-                  {/* Only show the name if the file is not an image */}
-                  {/* { !isImage(img) && (
-                    <span className="mt-2 text-sm text-gray-300">{img.split("/").pop()?.replace(/\.[^.]+$/, "").replace(/_/g, " ")}</span>
-                  ) } */}
-                </div>
+                </motion.div>
               </CarouselItem>
-            ))}
+            </AnimatePresence>
           </CarouselContent>
         </Carousel>
       </div>
