@@ -105,7 +105,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-5xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500">
+            <h1 className=" p-4 md:p-8 lg:p-12 my-8 text-5xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500">
               Vinay Developer
             </h1>
                 <div className="max-w-2xl mx-auto text-gray-300 text-lg leading-relaxed">

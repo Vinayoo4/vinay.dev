@@ -115,6 +115,25 @@ const RetroIntro: React.FC<RetroIntroProps> = ({ onFinish, typeSpeed = 40 }) => 
     setCharIndex(0);
   }, [currentSlide]);
 
+  // In the RetroIntro component, after the slide is fully displayed, set a timer to auto-advance after 1 second if the user does not interact.
+  useEffect(() => {
+    const autoAdvanceTimeout = setTimeout(() => {
+      if (charIndex >= slides[currentSlide].length) {
+        if (currentSlide < slides.length - 1) {
+          setFade("out");
+          setTimeout(() => {
+            setCurrentSlide((prev) => prev + 1);
+          }, 350);
+        } else {
+          setFade("out");
+          setTimeout(() => onFinish(), 350);
+        }
+      }
+    }, 1000);
+
+    return () => clearTimeout(autoAdvanceTimeout);
+  }, [charIndex, currentSlide, onFinish]);
+
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-[9999]">
       <div className="w-full max-w-2xl mx-auto bg-black border-2 border-green-500 rounded-lg shadow-2xl p-0 sm:p-8 crt flex flex-col items-center justify-center min-h-[60vh]">
