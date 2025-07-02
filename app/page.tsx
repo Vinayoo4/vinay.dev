@@ -112,8 +112,10 @@ export default function Home() {
 My learning journey has been shaped by hands-on exploration across several domains — from web development and UI/UX design to finance analytics, digital marketing, and human resources. I believe that being multi-curious helps me approach problems with flexibility and fresh perspectives.
 Most of the projects I’ve worked on were created to teach myself — whether it was a resume builder to simplify hiring processes, a billing dashboard for small businesses, or a campaign tool to understand lead generation. Each project helped me connect technical skills with real-world applications.
 To better understand how these domains work in industry, I’ve also completed virtual programs with organizations like J.P. Morgan, Accenture, and Reliance Industries, gaining exposure to financial modeling, data-driven storytelling, and public relations strategy.
-I’m currently focused on growing my frontend development skills using modern frameworks like Vue and React, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I’m always open to new ideas, mentorship, and collaborative learning.
-As a student, I don’t have all the answers yet — but I’m constantly learning, building, and looking for ways to grow through experience and collaboration.  I'm still learning — and building my way through it 🚀
+I am currently focused on growing my frontend development skills using modern frameworks like Vue and React, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I’m always open to new ideas, mentorship, and collaborative learning.
+As a student, I don’t have all the answers yet — but I’m constantly learning, building, and looking for ways to grow through experience and collaboration.
+
+I am still learning — and building my way through it 🚀
             </p>
             <div className="mt-8 flex justify-center space-x-4">
               {[
