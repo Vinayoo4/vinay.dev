@@ -10,7 +10,7 @@ interface RetroIntroProps {
 const slides: string[] = [
         `🧑‍💻 Welcome Commander Vinay Yadav...
         
-        Frontend Developer | Designer | Digital Strategist
+        Student | Web Developer | Designer | Digital Strategist | Financial Expert | Exploring Tech , Management , Marketing , Finance , HR , and more...
       
         You are now inside the core of Project Vinay.dev – a portal engineered by your own hands to change the digital world.
         `,
@@ -28,7 +28,11 @@ const slides: string[] = [
         Along the way, you trained with J.P. Morgan, Accenture, and Reliance in virtual simulations—where industry systems became blueprints.
       
         🧰 Tech Arsenal:
-        Vue.js, React, Tailwind, JavaScript, Figma, Webflow, Excel, CRM Tools, Design Systems, and Visual Storytelling.
+        Vue.js, React, Tailwind, JavaScript, Figma, Astro, Excel, CRM Tools, Design Systems, and Visual Storytelling.
+        ,
+
+        🧰 Soft Skills Arsenal:
+       Problem Solving,Self Learning, Creativity, Communication, Leadership, Teamwork, Time Management, Adaptability, and Critical Thinking.
         `,
         
         `🧬 Timeline Reconstruction:
