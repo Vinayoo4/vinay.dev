@@ -31,11 +31,11 @@ const slides: string[] = [
         Along the way, you trained with J.P. Morgan, Accenture, and Reliance in virtual simulations—where industry systems became blueprints , while learning the in-depth about finance from the top Market and Securities Government Bodies of the country.
       
         🧰 Tech Arsenal:
-        Vue.js, React, Tailwind, JavaScript, Figma, Astro, Excel, CRM Tools, Design Systems, and Visual Storytelling.
+        Typescript, Vite ,NoSql , Maths , Vue.js , Express.js , Next.js , React, Javascript , Tailwind, Pure Css , Shadcn ui , Daisy ui , Hero ui , Canva, Astro, Advanced Excel, CRM Tools, Design Systems, and Visual Storytelling.
         ,
 
         🧰 Soft Skills Arsenal:
-       Problem Solving,Self Learning, Creativity, Communication, Leadership, Teamwork, Time Management, Adaptability, and Critical Thinking.
+       Problem Solving , Self Learning, Creativity, Communication, Leadership, Teamwork, Time Management, Adaptability, and Critical Thinking.
         `,
         
         `🧬 Timeline Reconstruction:
