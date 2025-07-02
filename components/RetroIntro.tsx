@@ -28,7 +28,7 @@ const slides: string[] = [
       
         As a student, you started with curiosity—wondering how websites came alive. That spark led you through the worlds of frontend development, UI/UX design, finance dashboards, digital campaigns, and even HR systems.
         You built resume tools, billing apps, marketing dashboards, and more—each project a key in decoding real-world logic.
-        Along the way, you trained with J.P. Morgan, Accenture, and Reliance in virtual simulations—where industry systems became blueprints.
+        Along the way, you trained with J.P. Morgan, Accenture, and Reliance in virtual simulations—where industry systems became blueprints , while learning the in-depth about finance from the top Market and Securities Government Bodies of the country.
       
         🧰 Tech Arsenal:
         Vue.js, React, Tailwind, JavaScript, Figma, Astro, Excel, CRM Tools, Design Systems, and Visual Storytelling.
