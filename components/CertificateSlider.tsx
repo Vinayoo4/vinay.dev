@@ -12,6 +12,10 @@ const defaultImages: string[] = [
   "/certificate/basics_mf_ind_ss.jpg",
   "/certificate/basic_etfs_ind_ss.jpg",
   "/certificate/index_funds_ind_ss.jpg",
+  // Example Google Drive images:
+  "https://drive.google.com/uc?export=view&id=1A2B3C4D5E6F7G8H9I0J",
+  "https://drive.google.com/uc?export=view&id=2B3C4D5E6F7G8H9I0J1A",
+  "https://drive.google.com/uc?export=view&id=3C4D5E6F7G8H9I0J1A2B",
   "/certificate/intraday_ind_Ss.jpg",
   "/certificate/short_selling_ind_ss.jpg",
   "/certificate/basicsofstocksindss.jpg",

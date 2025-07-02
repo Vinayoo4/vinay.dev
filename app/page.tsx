@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Code2, User, Phone, BookOpen, Briefcase, Github, Linkedin,
@@ -14,124 +14,39 @@ import JourneySection from "@/components/JourneySection";
 import PortfolioSection from "@/components/PortfolioSection";
 import ContactSection from "@/components/ContactSection";
 import CertificateSlider from "@/components/CertificateSlider";
-
-function TypingEffect() {
-  const [displayed, setDisplayed] = useState("");
-  const fullText = "_____";
-  const index = useRef(0);
-
-  useEffect(() => {
-    if (index.current < fullText.length) {
-      const timeout = setTimeout(() => {
-        // Only append if the character exists
-        if (index.current < fullText.length) {
-          setDisplayed((prev) => prev + fullText.charAt(index.current));
-          index.current += 1;
-        }
-      }, 150); // Slightly slower for better readability
-      return () => clearTimeout(timeout);
-    }
-  }, [displayed]);
-
-  return (
-    <span>{displayed}<span className="animate-pulse">|</span></span>
-  );
-}
+import RetroIntro from "../components/RetroIntro";
+import NewsletterForm from "../components/NewsletterForm";
 
 export default function Home() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showNewsletter, setShowNewsletter] = useState(false);
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const [showFeatures, setShowFeatures] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const skills = [
-    { 
-      icon: Globe, 
-      name: "Frontend Development", 
-      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "UI/UX Design", "Responsive Design"] 
-    },
-    { 
-      icon: Database, 
-      name: "Financial Expertise", 
-      items: ["Investment Strategy", "Portfolio Management", "Market Analysis", "Risk Assessment"] 
-    },
-    { 
-      icon: Brain, 
-      name: "Digital Marketing", 
-      items: ["SEO Optimization", "Content Strategy", "Social Media", "Analytics"] 
-    },
-    { 
-      icon: Terminal, 
-      name: "Trading & Investment", 
-      items: ["Technical Analysis", "Fundamental Analysis", "Risk Management", "Portfolio Optimization"] 
-    },
-    { 
-      icon: Layout, 
-      name: "Design Skills", 
-      items: ["UI/UX Design", "Wireframing", "Prototyping", "Brand Identity"] 
-    },
-    { 
-      icon: Briefcase, 
-      name: "Advisory Services", 
-      items: ["Personal Finance", "Investment Planning", "Wealth Management", "Financial Education"] 
-    }
-  ];
+  // Step 1: Show intro first, then newsletter, then homepage
+  if (showIntro) {
+    return <RetroIntro onFinish={() => { setShowIntro(false); setShowNewsletter(true); }} typeSpeed={18} />;
+  }
+  if (showNewsletter && !newsletterSubmitted) {
+    return (
+      <div>
+        <NewsletterForm />
+        <NewsletterSubmissionWatcher onSubmitted={() => setNewsletterSubmitted(true)} />
+      </div>
+    );
+  }
 
-  const experiences = [
-    {
-      title: "Senior Full Stack Developer",
-      company: "Shree Nandi Marketing Services",
-      period: "2023 - Present",
-      description: "Leading development of enterprise-scale applications using modern technologies.",
-      achievements: [
-        "Reduced application load time by 60%",
-        "Implemented microservices architecture",
-        "Gained working experience as the web developer and digital marketing expert"
-      ]
-    },
-    {
-      title: "Full Stack Developer",
-      company: "Digital Solutions Ltd.",
-      period: "2019 - 2021",
-      description: "Developed and maintained multiple client projects using React and Node.js.",
-      achievements: [
-        "Delivered 15+ successful projects",
-        "Introduced automated testing",
-        "Improved code quality standards"
-      ]
-    }
-  ];
-
-  const projects = [
-    {
-      title: "E-Commerce Platform",
-      description: "A full-featured online shopping platform with real-time inventory management.",
-      image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800&auto=format&fit=crop&q=60",
-      tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"]
-    },
-    {
-      title: "AI Task Manager",
-      description: "Smart task management system with AI-powered prioritization.",
-      image: "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&auto=format&fit=crop&q=60",
-      tags: ["React", "Python", "TensorFlow", "MongoDB"]
-    },
-    {
-      title: "Real-time Analytics Dashboard",
-      description: "Interactive dashboard for monitoring business metrics in real-time.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60",
-      tags: ["Vue.js", "D3.js", "Node.js", "WebSocket"]
-    }
-  ];
-
+  // Step 3: Homepage content (all sections, no SEO/metadata logic)
   return (
     <main className="min-h-screen bg-black">
       <div
@@ -190,13 +105,14 @@ export default function Home() {
             transition={{ delay: 0.2 }}
           >
             <h1 className="text-5xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500">
-              <TypingEffect /> Developer
+              Vinay Developer
             </h1>
             <p className="mt-6 text-xl sm:text-2xl text-gray-400">
-              Crafting Digital Experiences Through Code
-            </p>
-            <p className="mt-4 text-lg text-gray-500">
-               • Student • 
+              Hi, I'm Vinay — a student passionate about learning by building. My journey started with curiosity for how websites work, which led me to explore frontend development, UI/UX design, finance, digital marketing, and even HR strategy.<br /><br />
+              Over time, I've completed hands-on projects like resume builders, billing dashboards, marketing tools, and data visualizations — each one teaching me something new. Along the way, I also took part in virtual internships with J.P. Morgan, Accenture, and Reliance to understand how things work in the real world.<br /><br />
+              <span className="font-semibold text-yellow-400">Things I'm learning and working with:</span><br />
+              Vue.js, React, Tailwind CSS, JavaScript, Figma, Excel, CRM Tools, Analytics, and Storytelling through design.<br /><br />
+              I'm still learning — and building my way through it 🚀
             </p>
             <div className="mt-8 flex justify-center space-x-4">
               {[
@@ -222,4 +138,19 @@ export default function Home() {
       </section>
     </main>
   );
+}
+
+// Helper component to detect newsletter submission
+function NewsletterSubmissionWatcher({ onSubmitted }: { onSubmitted: () => void }) {
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const confirmation = document.querySelector(".min-h-screen.bg-black.text-green-400");
+      if (confirmation && confirmation.textContent?.includes("Transmission received")) {
+        onSubmitted();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, [onSubmitted]);
+  return null;
 }
