@@ -32,7 +32,6 @@ const slides: string[] = [
       
         🧰 Tech Arsenal:
         Typescript, Vite ,NoSql , Maths , Vue.js , Express.js , Next.js , React, Javascript , Tailwind, Pure Css , Shadcn ui , Daisy ui , Hero ui , Canva, Astro, Advanced Excel, CRM Tools, Design Systems, and Visual Storytelling.
-        ,
 
         🧰 Soft Skills Arsenal:
        Problem Solving , Self Learning, Creativity, Communication, Leadership, Teamwork, Time Management, Adaptability, and Critical Thinking.

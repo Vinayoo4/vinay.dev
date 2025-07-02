@@ -107,16 +107,29 @@ export default function Home() {
             <h1 className="text-5xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-yellow-200 to-yellow-500">
               Vinay Developer
             </h1>
-            <p className="mt-6 text-xl sm:text-2xl text-gray-400">
-            I’m Vinay Yadav, a student with a deep interest in how design, technology, and business strategy come together to create meaningful digital experiences.
-My learning journey has been shaped by hands-on exploration across several domains — from web development and UI/UX design to finance analytics, digital marketing, and human resources. I believe that being multi-curious helps me approach problems with flexibility and fresh perspectives.
-Most of the projects I’ve worked on were created to teach myself — whether it was a resume builder to simplify hiring processes, a billing dashboard for small businesses, or a campaign tool to understand lead generation. Each project helped me connect technical skills with real-world applications.
-To better understand how these domains work in industry, I’ve also completed virtual programs with organizations like J.P. Morgan, Accenture, and Reliance Industries, gaining exposure to financial modeling, data-driven storytelling, and public relations strategy.
-I am currently focused on growing my frontend development skills using modern frameworks like Vue and React, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I’m always open to new ideas, mentorship, and collaborative learning.
-As a student, I don’t have all the answers yet — but I’m constantly learning, building, and looking for ways to grow through experience and collaboration.
-
-I am still learning — and building my way through it 🚀
-            </p>
+                <div className="max-w-2xl mx-auto text-gray-300 text-lg leading-relaxed">
+                        <p className="mb-4">
+                          <span className="font-bold text-yellow-400">I’m Vinay Yadav</span>, a student with a deep interest in how design, technology, and business strategy come together to create meaningful digital experiences.
+                        </p>
+                        <p className="mb-4">
+                          My learning journey has been shaped by hands-on exploration across several domains — from <span className="font-semibold text-yellow-400">web development</span> and <span className="font-semibold text-yellow-400">UI/UX design</span> to <span className="font-semibold text-yellow-400">finance analytics</span>, <span className="font-semibold text-yellow-400">digital marketing</span>, and <span className="font-semibold text-yellow-400">human resources</span>. I believe that being multi-curious helps me approach problems with flexibility and fresh perspectives.
+                        </p>
+                        <p className="mb-4">
+                          Most of the projects I’ve worked on were created to teach myself — whether it was a <span className="font-semibold text-yellow-400">resume builder</span> to simplify hiring processes, a <span className="font-semibold text-yellow-400">billing dashboard</span> for small businesses, or a <span className="font-semibold text-yellow-400">campaign tool</span> to understand lead generation. Each project helped me connect technical skills with real-world applications.
+                        </p>
+                        <p className="mb-4">
+                          To better understand how these domains work in industry, I’ve also completed virtual programs with organizations like <span className="font-semibold text-yellow-400">J.P. Morgan</span>, <span className="font-semibold text-yellow-400">Accenture</span>, and <span className="font-semibold text-yellow-400">Reliance Industries</span>, gaining exposure to financial modeling, data-driven storytelling, and public relations strategy.
+                        </p>
+                        <p className="mb-4">
+                          I am currently focused on growing my <span className="font-semibold text-yellow-400">frontend development</span> skills using modern frameworks like <span className="font-semibold text-yellow-400">Vue</span> and <span className="font-semibold text-yellow-400">React</span>, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I’m always open to new ideas, mentorship, and collaborative learning.
+                        </p>
+                        <p className="mb-4">
+                          As a student, I don’t have all the answers yet — but I’m constantly learning, building, and looking for ways to grow through experience and collaboration.
+                        </p>
+                        <p className="mt-6 text-yellow-400 font-bold text-xl">
+                          I am still learning — and building my way through it 🚀
+                        </p>
+    </div>
             <div className="mt-8 flex justify-center space-x-4">
               {[
                 { icon: Github, href: "https://github.com/Vinayoo4" },
