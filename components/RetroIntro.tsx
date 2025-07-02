@@ -10,7 +10,10 @@ interface RetroIntroProps {
 const slides: string[] = [
         `🧑‍💻 Welcome Commander Vinay Yadav...
         
-        Student | Web Developer | Designer | Digital Strategist | Financial Expert | Exploring Tech , Management , Marketing , Finance , HR , and more...
+        Student | Web Developer | Designer | Digital Strategist | Financial Expert 
+        
+        
+        Exploring Tech , Management , Marketing , Finance , HR , and more...
       
         You are now inside the core of Project Vinay.dev – a portal engineered by your own hands to change the digital world.
         `,
