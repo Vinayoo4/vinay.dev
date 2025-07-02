@@ -92,6 +92,7 @@ export default function Home() {
       <PortfolioSection />
       <JourneySection />
       <AboutSection />
+      <div className="mt-16" />
       <CertificateSlider />
 
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -109,22 +110,22 @@ export default function Home() {
             </h1>
                 <div className="max-w-2xl mx-auto text-gray-300 text-lg leading-relaxed">
                         <p className="mb-4">
-                          <span className="font-bold text-yellow-400">I’m Vinay Yadav</span>, a student with a deep interest in how design, technology, and business strategy come together to create meaningful digital experiences.
+                          <span className="font-bold text-yellow-400">I'm Vinay Yadav</span>, a student with a deep interest in how design, technology, and business strategy come together to create meaningful digital experiences.
                         </p>
                         <p className="mb-4">
                           My learning journey has been shaped by hands-on exploration across several domains — from <span className="font-semibold text-yellow-400">web development</span> and <span className="font-semibold text-yellow-400">UI/UX design</span> to <span className="font-semibold text-yellow-400">finance analytics</span>, <span className="font-semibold text-yellow-400">digital marketing</span>, and <span className="font-semibold text-yellow-400">human resources</span>. I believe that being multi-curious helps me approach problems with flexibility and fresh perspectives.
                         </p>
                         <p className="mb-4">
-                          Most of the projects I’ve worked on were created to teach myself — whether it was a <span className="font-semibold text-yellow-400">resume builder</span> to simplify hiring processes, a <span className="font-semibold text-yellow-400">billing dashboard</span> for small businesses, or a <span className="font-semibold text-yellow-400">campaign tool</span> to understand lead generation. Each project helped me connect technical skills with real-world applications.
+                          Most of the projects I've worked on were created to teach myself — whether it was a <span className="font-semibold text-yellow-400">resume builder</span> to simplify hiring processes, a <span className="font-semibold text-yellow-400">billing dashboard</span> for small businesses, or a <span className="font-semibold text-yellow-400">campaign tool</span> to understand lead generation. Each project helped me connect technical skills with real-world applications.
                         </p>
                         <p className="mb-4">
-                          To better understand how these domains work in industry, I’ve also completed virtual programs with organizations like <span className="font-semibold text-yellow-400">J.P. Morgan</span>, <span className="font-semibold text-yellow-400">Accenture</span>, and <span className="font-semibold text-yellow-400">Reliance Industries</span>, gaining exposure to financial modeling, data-driven storytelling, and public relations strategy.
+                          To better understand how these domains work in industry, I've also completed virtual programs with organizations like <span className="font-semibold text-yellow-400">J.P. Morgan</span>, <span className="font-semibold text-yellow-400">Accenture</span>, and <span className="font-semibold text-yellow-400">Reliance Industries</span>, gaining exposure to financial modeling, data-driven storytelling, and public relations strategy.
                         </p>
                         <p className="mb-4">
-                          I am currently focused on growing my <span className="font-semibold text-yellow-400">frontend development</span> skills using modern frameworks like <span className="font-semibold text-yellow-400">Vue</span> and <span className="font-semibold text-yellow-400">React</span>, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I’m always open to new ideas, mentorship, and collaborative learning.
+                          I am currently focused on growing my <span className="font-semibold text-yellow-400">frontend development</span> skills using modern frameworks like <span className="font-semibold text-yellow-400">Vue</span> and <span className="font-semibold text-yellow-400">React</span>, while continuing to study design systems, user behavior, and data visualization. I enjoy working on things that combine structure and creativity, and I'm always open to new ideas, mentorship, and collaborative learning.
                         </p>
                         <p className="mb-4">
-                          As a student, I don’t have all the answers yet — but I’m constantly learning, building, and looking for ways to grow through experience and collaboration.
+                          As a student, I don't have all the answers yet — but I'm constantly learning, building, and looking for ways to grow through experience and collaboration.
                         </p>
                         <p className="mt-6 text-yellow-400 font-bold text-xl">
                           I am still learning — and building my way through it 🚀
