@@ -34,7 +34,14 @@ const slides: string[] = [
         `🧬 Timeline Reconstruction:
       
         010101: You mastered Typescript, Next.js, Vite, Tailwind, Astro, Vue and React.
-        011110: You embedded typewriter protocols and glitch fonts.
+        052024: J.P. Morgan (Forage) Investment Banking Virtual Experience .
+        052024: Accenture (Forage) Data Analytics & Visualization.
+        062025: Reliance Industries Public Relations in the Digital Age.
+        052025: NISM – National Institute of Securities Markets Mutual Funds & Investment Advisor (Advanced).
+        052025: Investor Awareness & Dispute Resolution (ODR Program).
+        052024: IBM Skill Build Web Development Basics | Learn JavaScript.
+        062025: NSDC Web Design & Development.
+        032023: ALEPH | HP LIFE Digital Ads | Basic Mathematics | Intro to Digital Business.
         100101: You deployed the core to the outer shell.
         111111: You opened the gateway for other agents to enter.
         `,
