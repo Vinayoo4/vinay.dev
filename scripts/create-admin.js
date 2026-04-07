@@ -1,60 +1,54 @@
 /**
- * Script to create an admin user in the database
+ * Script to create an admin user in the local SQLite database.
  * Run with: node scripts/create-admin.js
+ *
+ * The script seeds a default admin user if one does not already exist.
+ * Credentials default to ADMIN_EMAIL / ADMIN_PASSWORD from .env, or the
+ * hard-coded fallback values below.
  */
 
 require('dotenv').config();
-const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs');
+const Database = require('better-sqlite3');
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const { randomUUID } = require('crypto');
 
-// Admin user details - these should be changed in production
-const adminUser = {
-  name: 'Admin User',
-  email: 'admin@example.com',
-  password: 'adminPassword123',
-  role: 'admin'
-};
+const DATA_DIR = path.join(process.cwd(), 'data');
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
-async function createAdminUser() {
-  try {
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected successfully');
+const DB_PATH = path.join(DATA_DIR, 'portfolio.db');
+const db = new Database(DB_PATH);
+db.pragma('journal_mode = WAL');
 
-    // Check if admin user already exists
-    const existingUser = await User.findOne({ email: adminUser.email });
-    if (existingUser) {
-      console.log('Admin user already exists');
-      await mongoose.connection.close();
-      return;
-    }
+// Ensure the users table exists
+db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'user',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+`);
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(adminUser.password, salt);
+const adminEmail = process.env.ADMIN_EMAIL || 'admin@vinay.dev';
+const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@12345';
+const adminName = process.env.ADMIN_NAME || 'Admin';
 
-    // Create new admin user
-    const newAdmin = new User({
-      name: adminUser.name,
-      email: adminUser.email,
-      password: hashedPassword,
-      role: adminUser.role
-    });
-
-    await newAdmin.save();
-    console.log('Admin user created successfully');
-
-    // Close MongoDB connection
-    await mongoose.connection.close();
-    console.log('MongoDB connection closed');
-  } catch (error) {
-    console.error('Error creating admin user:', error);
-    process.exit(1);
-  }
+const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(adminEmail);
+if (existing) {
+  console.log(`Admin user already exists: ${adminEmail}`);
+  process.exit(0);
 }
 
-createAdminUser();
+const hash = bcrypt.hashSync(adminPassword, 10);
+const id = randomUUID();
+db.prepare('INSERT INTO users (id, name, email, password, role) VALUES (?, ?, ?, ?, ?)').run(id, adminName, adminEmail, hash, 'admin');
+
+console.log('Admin user created successfully');
+console.log(`  Email:    ${adminEmail}`);
+console.log(`  Password: ${adminPassword}`);
+console.log('Change the password in production!');
+process.exit(0);

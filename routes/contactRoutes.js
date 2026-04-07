@@ -10,16 +10,21 @@ const ContactMessage = require('../models/ContactMessage');
  * @access  Public
  */
 router.post('/', [
-  body('name').notEmpty(),
-  body('email').isEmail(),
-  body('message').notEmpty()
+  body('name').notEmpty().withMessage('Name is required'),
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('message').notEmpty().withMessage('Message is required')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-  const newMessage = new ContactMessage(req.body);
-  await newMessage.save();
-  res.status(201).json({ success: true, message: 'Message sent successfully' });
+  try {
+    const newMessage = new ContactMessage(req.body);
+    await newMessage.save();
+    res.status(201).json({ success: true, message: 'Message sent successfully' });
+  } catch (error) {
+    console.error('Error saving contact message:', error);
+    res.status(500).json({ success: false, message: 'Failed to send message. Please try again.' });
+  }
 });
 
 /**

@@ -3,18 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Send, MessageSquare } from "lucide-react";
-import { fetchChatMessages, sendChatMessage } from "@/lib/api";
-import { io } from "socket.io-client";
 
 // Define the ChatMessage type
 type ChatMessage = {
-  _id: string;
+  id: string;
   user: string;
   message: string;
-  createdAt: string;
+  created_at: string;
 };
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export default function Chat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -23,44 +19,24 @@ export default function Chat() {
   const [error, setError] = useState("");
   const [roomId, setRoomId] = useState("general");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const socketRef = useRef<any>(null);
-
-  useEffect(() => {
-    // Initialize socket connection
-    const SOCKET_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    socketRef.current = io(SOCKET_URL);
-
-    // Join the room
-    socketRef.current.emit('join-room', roomId);
-
-    // Listen for new messages
-    socketRef.current.on('receive-message', (message: ChatMessage) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    // Cleanup on unmount
-    return () => {
-      socketRef.current.disconnect();
-    };
-  }, [roomId]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`${API_URL}/api/chat`);
+        const res = await fetch(`/api/chat?room=${encodeURIComponent(roomId)}`);
         if (!res.ok) throw new Error('Failed to load messages');
         const data = await res.json();
         setMessages(data);
-      } catch (err) {
+      } catch {
         setError("Could not load chat messages.");
       } finally {
         setLoading(false);
       }
     };
     fetchMessages();
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -72,16 +48,16 @@ export default function Chat() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${API_URL}/api/chat`, {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: "Anonymous", message: newMessage })
+        body: JSON.stringify({ user: "Anonymous", message: newMessage, room: roomId })
       });
       if (!res.ok) throw new Error('Failed to send message');
       const { data } = await res.json();
       setMessages((prev) => [...prev, data]);
       setNewMessage("");
-    } catch (err) {
+    } catch {
       setError("Could not send message.");
     } finally {
       setLoading(false);
@@ -105,7 +81,7 @@ export default function Chat() {
         >
           <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Anonymous Chat</h1>
           <p className="text-gray-400">
-            Join the conversation anonymously. Messages are encrypted for privacy.
+            Join the conversation anonymously. All messages are stored locally.
           </p>
         </motion.div>
 
@@ -135,13 +111,14 @@ export default function Chat() {
             ) : (
               messages.map((msg) => (
                 <motion.div
-                  key={msg._id}
+                  key={msg.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="bg-yellow-500/10 rounded-lg p-3 max-w-[80%]">
+                  <p className="text-xs text-yellow-500/70 mb-1 font-medium">{msg.user}</p>
                   <p className="text-gray-300">{msg.message}</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {new Date(msg.createdAt).toLocaleTimeString()}
+                    {new Date(msg.created_at).toLocaleTimeString()}
                   </p>
                 </motion.div>
               ))

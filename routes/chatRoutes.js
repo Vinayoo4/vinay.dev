@@ -5,12 +5,16 @@ const router = express.Router();
 
 /**
  * @route   GET /api/chat
- * @desc    Get all chat messages
+ * @desc    Get chat messages, optionally filtered by room
  * @access  Public
  */
 router.get('/', async (req, res) => {
   try {
-    const messages = await ChatMessage.find().sort({ createdAt: 1 });
+    const { room } = req.query;
+    const filter = room ? { room } : {};
+    // Limit to 100 most recent messages per room; use ?limit= query param to override
+    const limit = Math.min(parseInt(req.query.limit) || 100, 500);
+    const messages = await ChatMessage.find(filter).sort({ createdAt: 1 }).limit(limit);
     res.status(200).json(messages);
   } catch (error) {
     console.error('Error fetching chat messages:', error);
@@ -24,15 +28,15 @@ router.get('/', async (req, res) => {
  * @access  Public
  */
 router.post('/', [
-  body('user').notEmpty(),
-  body('message').notEmpty()
+  body('user').notEmpty().withMessage('User is required'),
+  body('message').notEmpty().withMessage('Message is required'),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   try {
-    const { user, message } = req.body;
-    const newMessage = new ChatMessage({ user, message });
+    const { user, message, room } = req.body;
+    const newMessage = new ChatMessage({ user, message, room: room || 'general' });
     await newMessage.save();
     res.status(201).json({ success: true, message: 'Message sent successfully', data: newMessage });
   } catch (error) {

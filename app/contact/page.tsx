@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Mail, MapPin, Github, Linkedin, Twitter, Send } from "lucide-react";
 import Link from "next/link";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = '';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function Contact() {
     setError("");
 
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

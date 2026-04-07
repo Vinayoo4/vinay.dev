@@ -20,7 +20,7 @@ import NewsletterForm from "../components/NewsletterForm";
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
   const [showNewsletter, setShowNewsletter] = useState(false);
-  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [newsletterDone, setNewsletterDone] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -35,14 +35,19 @@ export default function Home() {
 
   // Step 1: Show intro first, then newsletter, then homepage
   if (showIntro) {
-    return <RetroIntro onFinish={() => { setShowIntro(false); setShowNewsletter(true); }} typeSpeed={18} />;
-  }
-  if (showNewsletter && !newsletterSubmitted) {
     return (
-      <div>
-        <NewsletterForm />
-        <NewsletterSubmissionWatcher onSubmitted={() => setNewsletterSubmitted(true)} />
-      </div>
+      <RetroIntro
+        onFinish={() => { setShowIntro(false); setShowNewsletter(true); }}
+        typeSpeed={18}
+      />
+    );
+  }
+  if (showNewsletter && !newsletterDone) {
+    return (
+      <NewsletterForm
+        onSkip={() => setNewsletterDone(true)}
+        onSubmitted={() => setNewsletterDone(true)}
+      />
     );
   }
 
@@ -88,12 +93,12 @@ export default function Home() {
         </div>
       </nav>
 
-      <ContactSection />
-      <PortfolioSection />
-      <JourneySection />
       <AboutSection />
-      <div className="mt-16" />
+      <JourneySection />
+      <PortfolioSection />
       <CertificateSlider />
+      <ContactSection />
+      <div className="mt-16" />
 
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <motion.div style={{ opacity }} className="absolute inset-0 pointer-events-none">
@@ -155,19 +160,4 @@ export default function Home() {
       </section>
     </main>
   );
-}
-
-// Helper component to detect newsletter submission
-function NewsletterSubmissionWatcher({ onSubmitted }: { onSubmitted: () => void }) {
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const confirmation = document.querySelector(".min-h-screen.bg-black.text-green-400");
-      if (confirmation && confirmation.textContent?.includes("Transmission received")) {
-        onSubmitted();
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-    return () => observer.disconnect();
-  }, [onSubmitted]);
-  return null;
 }

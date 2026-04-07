@@ -9,12 +9,29 @@ const connectDB = require('./lib/mongo');
 const contactRoutes = require('./routes/contactRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const authRoutes = require('./routes/authRoutes');
+const newsletterRoutes = require('./routes/newsletterRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Allowed origins for CORS
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+  : ['http://localhost:3000'];
+
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. curl, mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
+    callback(new Error('Origin not allowed by CORS policy'));
+  },
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-auth-token', 'Authorization'],
+}));
 app.use(express.json());
 
 // Connect to MongoDB
@@ -24,12 +41,15 @@ connectDB();
 app.use('/api/contact', contactRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 
 // Socket.io setup for real-time chat
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: '*',
+    origin: allowedOrigins.length === 1 && process.env.NODE_ENV === 'development'
+      ? '*'
+      : allowedOrigins,
     methods: ['GET', 'POST']
   }
 });
@@ -44,13 +64,11 @@ io.on('connection', (socket) => {
 
   socket.on('send-message', async (messageData) => {
     try {
-      // You may want to update this to match the new ChatMessage schema
-      // For now, just save user and message fields
       const ChatMessage = require('./models/ChatMessage');
-      const { user, message } = messageData;
-      const newMessage = new ChatMessage({ user, message });
+      const { user, message, room } = messageData;
+      const newMessage = new ChatMessage({ user, message, room: room || 'general' });
       await newMessage.save();
-      io.to(messageData.room_id).emit('receive-message', newMessage);
+      io.to(messageData.room || 'general').emit('receive-message', newMessage);
     } catch (error) {
       console.error('Error handling socket message:', error);
     }
