@@ -1,39 +1,52 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getDb, generateId } from '@/lib/db';
+import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+import chatData from "@/data/chat.json";
 
-// GET /api/chat - fetch messages for a room
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const room = searchParams.get('room') || 'general';
-  const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 500);
+const chatPath = path.join(process.cwd(), "data", "chat.json");
 
-  const db = getDb();
-  const messages = db
-    .prepare('SELECT * FROM chat_messages WHERE room = ? ORDER BY created_at ASC LIMIT ?')
-    .all(room, limit);
-
-  return NextResponse.json(messages);
+export async function GET() {
+  return NextResponse.json(chatData);
 }
 
-// POST /api/chat - send a message
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { user, message, room } = body;
+  try {
+    const { room, user, message } = await req.json();
+    if (!room || !user || !message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
 
-  if (!user || typeof user !== 'string' || user.trim().length === 0)
-    return NextResponse.json({ message: 'User is required' }, { status: 400 });
-  if (!message || typeof message !== 'string' || message.trim().length === 0)
-    return NextResponse.json({ message: 'Message is required' }, { status: 400 });
+    const currentData = JSON.parse(fs.readFileSync(chatPath, "utf-8"));
+    const newMsg = {
+      id: Date.now().toString(),
+      room,
+      user,
+      message,
+      timestamp: new Date().toISOString(),
+    };
+    currentData.messages.push(newMsg);
 
-  const db = getDb();
-  const id = generateId();
-  const safeRoom = (room && typeof room === 'string' && room.trim()) ? room.trim() : 'general';
-  const created_at = new Date().toISOString();
+    const roomData = currentData.autoReplies[room] || currentData.autoReplies["general"];
+    let autoReply = null;
+    const lower = message.toLowerCase();
+    for (const rule of roomData) {
+      const triggers = rule.trigger.split("|");
+      if (triggers.some((t: string) => lower.includes(t))) {
+        autoReply = {
+          id: (Date.now() + 1).toString(),
+          room,
+          user: "SaltedHash AI",
+          message: rule.response,
+          timestamp: new Date().toISOString(),
+        };
+        currentData.messages.push(autoReply);
+        break;
+      }
+    }
 
-  db.prepare(
-    'INSERT INTO chat_messages (id, user, message, room, created_at) VALUES (?, ?, ?, ?, ?)'
-  ).run(id, user.trim(), message.trim(), safeRoom, created_at);
-
-  const saved = db.prepare('SELECT * FROM chat_messages WHERE id = ?').get(id);
-  return NextResponse.json({ success: true, message: 'Message sent successfully', data: saved }, { status: 201 });
+    fs.writeFileSync(chatPath, JSON.stringify(currentData, null, 2));
+    return NextResponse.json({ success: true, message: newMsg, autoReply });
+  } catch {
+    return NextResponse.json({ error: "Failed to save" }, { status: 500 });
+  }
 }

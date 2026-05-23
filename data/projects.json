@@ -1,0 +1,101 @@
+[
+  {
+    "id": "ai-seo-analyzer",
+    "title": "AI SEO Analyzer",
+    "tech": ["Python", "ML", "NLP"],
+    "demo": "/demos/seo-analyzer",
+    "status": "live",
+    "description": "An AI-powered SEO analysis tool that scans websites, identifies optimization opportunities, and generates actionable reports.",
+    "highlights": ["NLP Content Analysis", "Competitor Benchmarking", "Auto-generated Reports"],
+    "github": "https://github.com/Vinayoo4",
+    "image": null
+  },
+  {
+    "id": "taskpro-flow",
+    "title": "TaskPro-Flow",
+    "tech": ["AI", "Workflow", "Productivity"],
+    "demo": "https://partyrock.aws/u/thelrnr/P30EwNXs2/TaskPro-Flow",
+    "status": "live",
+    "description": "AI-powered task management with smart prioritization, scheduling, and team collaboration.",
+    "highlights": ["AI Prioritization", "Smart Scheduling", "Progress Tracking"],
+    "github": null,
+    "image": null
+  },
+  {
+    "id": "interviewprep-pro",
+    "title": "InterviewPrep-Pro",
+    "tech": ["AI", "Learning", "NLP"],
+    "demo": "https://partyrock.aws/u/thelrnr/JeuE2DHvn/InterviewPrep-Pro",
+    "status": "live",
+    "description": "Prepare for interviews with AI-generated questions, personalized feedback, and progress analytics.",
+    "highlights": ["Custom Questions", "AI Feedback", "Practice Sessions"],
+    "github": null,
+    "image": null
+  },
+  {
+    "id": "resumegen",
+    "title": "ResumeGen",
+    "tech": ["React", "PDF", "Web"],
+    "demo": "https://vinayoo4.github.io/resumegen/",
+    "status": "live",
+    "description": "Generate beautiful, ATS-friendly resumes with customizable templates and real-time preview.",
+    "highlights": ["Multiple Templates", "Real-time Preview", "PDF Export"],
+    "github": "https://github.com/Vinayoo4/resumegen",
+    "image": null
+  },
+  {
+    "id": "shree-nandi-marketing",
+    "title": "Shree Nandi Marketing",
+    "tech": ["Three.js", "JavaScript", "WebGL"],
+    "demo": "https://shreenandimarketing.netlify.app",
+    "status": "live",
+    "description": "Immersive 3D marketing agency website with interactive visuals and modern design.",
+    "highlights": ["3D Interactive Visuals", "Modern UI/UX", "Responsive Design"],
+    "github": null,
+    "image": null
+  },
+  {
+    "id": "daily-automation",
+    "title": "Daily Automation",
+    "tech": ["Python", "Scripts", "Productivity"],
+    "demo": "https://github.com/Vinayoo4/Daily_automation",
+    "status": "live",
+    "description": "Open-source automation scripts for daily tasks — file organization, email sorting, and system cleanup.",
+    "highlights": ["Task Automation", "Scheduled Jobs", "Cross-platform"],
+    "github": "https://github.com/Vinayoo4/Daily_automation",
+    "image": null
+  },
+  {
+    "id": "invoice-billing",
+    "title": "Invoice Billing System",
+    "tech": ["Node.js", "Business", "Billing"],
+    "demo": "https://github.com/Vinayoo4/inovice_billing",
+    "status": "live",
+    "description": "Simple yet powerful invoice billing system for small businesses with payment tracking.",
+    "highlights": ["Invoice Generation", "Payment Tracking", "Client Management"],
+    "github": "https://github.com/Vinayoo4/inovice_billing",
+    "image": null
+  },
+  {
+    "id": "convostarter",
+    "title": "ConvoStarter",
+    "tech": ["AI", "Chat", "Social"],
+    "demo": "https://partyrock.aws/u/thelrnr/gBm97lCJh/ConvoStarter",
+    "status": "live",
+    "description": "AI tool that helps start and maintain engaging conversations with context-aware suggestions.",
+    "highlights": ["Conversation Starters", "Context Awareness", "Topic Suggestions"],
+    "github": null,
+    "image": null
+  },
+  {
+    "id": "password-generator",
+    "title": "Simple Password Generator",
+    "tech": ["Python", "Security"],
+    "demo": "https://github.com/Thelrnr/Simple_password_generator",
+    "status": "live",
+    "description": "Secure password generator creating strong, random passwords with customizable options.",
+    "highlights": ["Random Generation", "Customizable Length", "Multiple Char Sets"],
+    "github": "https://github.com/Thelrnr/Simple_password_generator",
+    "image": null
+  }
+]

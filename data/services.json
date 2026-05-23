@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ai-ml",
+    "label": "AI/ML Solutions",
+    "status": "completed",
+    "icon": "brain",
+    "description": "Machine learning models, NLP pipelines, and intelligent automation scripts tailored for business needs.",
+    "color": "#06b6d4",
+    "children": ["python-automation", "spa-dev"],
+    "details": {
+      "offerings": ["Custom ML Models", "NLP Chatbots", "Data Pipelines", "Predictive Analytics"],
+      "tech": ["Python", "TensorFlow", "scikit-learn", "OpenAI"],
+      "caseStudy": "Built an AI SEO analyzer that reduced manual audit time by 80%"
+    }
+  },
+  {
+    "id": "python-automation",
+    "label": "Python Automation",
+    "status": "completed",
+    "icon": "terminal",
+    "description": "Scripts and bots that automate repetitive tasks, web scraping, and data processing.",
+    "color": "#22c55e",
+    "children": ["saas-build"],
+    "details": {
+      "offerings": ["Web Scrapers", "Report Generators", "Email Bots", "Data Cleaners"],
+      "tech": ["Python", "BeautifulSoup", "Selenium", "Pandas"],
+      "caseStudy": "Automated invoice processing for a finance firm — 40 hrs/week saved"
+    }
+  },
+  {
+    "id": "spa-dev",
+    "label": "Single Page Apps",
+    "status": "completed",
+    "icon": "layout",
+    "description": "Responsive Vue/React SPAs with real-time data, retro dashboards, and fluid UX.",
+    "color": "#a855f7",
+    "children": ["pwa-dev"],
+    "details": {
+      "offerings": ["React SPAs", "Vue Dashboards", "Real-time Data", "Component Libraries"],
+      "tech": ["React", "Vue", "Next.js", "Tailwind CSS"],
+      "caseStudy": "Built a real-time analytics dashboard serving 10K+ daily users"
+    }
+  },
+  {
+    "id": "pwa-dev",
+    "label": "Progressive Web Apps",
+    "status": "completed",
+    "icon": "smartphone",
+    "description": "Installable, offline-capable PWAs that feel native on any device.",
+    "color": "#f59e0b",
+    "children": ["saas-build"],
+    "details": {
+      "offerings": ["Offline-first Apps", "Push Notifications", "App Shell", "Background Sync"],
+      "tech": ["Service Workers", "IndexedDB", "Manifest", "Workbox"],
+      "caseStudy": "Converted a booking platform to PWA — 35% increase in repeat visits"
+    }
+  },
+  {
+    "id": "saas-build",
+    "label": "SaaS Development",
+    "status": "in-progress",
+    "icon": "cloud",
+    "description": "Full-stack SaaS platforms with auth, billing, dashboards, and multi-tenancy.",
+    "color": "#ef4444",
+    "children": [],
+    "details": {
+      "offerings": ["Multi-tenant Architecture", "Subscription Billing", "Admin Panels", "Analytics"],
+      "tech": ["Next.js", "Node.js", "Stripe", "PostgreSQL"],
+      "caseStudy": "Currently building SaltedHash — an AI-powered business toolkit"
+    }
+  }
+]

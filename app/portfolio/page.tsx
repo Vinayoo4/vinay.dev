@@ -1,209 +1,162 @@
 "use client";
-
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { fetchProjects } from "@/lib/data";
+import {
+  ExternalLink, Github, ArrowLeft, Tag, Code2,
+  Sparkles, ChevronRight, Eye
+} from "lucide-react";
 import Link from "next/link";
-import { ChevronDown, ExternalLink, Github } from "lucide-react";
 
-export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+const techColors: Record<string, string> = {
+  Python: "text-neon-green border-neon-green/30 bg-neon-green/10",
+  ML: "text-neon-purple border-neon-purple/30 bg-neon-purple/10",
+  NLP: "text-neon-cyan border-neon-cyan/30 bg-neon-cyan/10",
+  AI: "text-neon-purple border-neon-purple/30 bg-neon-purple/10",
+  React: "text-neon-cyan border-neon-cyan/30 bg-neon-cyan/10",
+  Next: "text-gray-200 border-gray-500/30 bg-gray-500/10",
+  Node: "text-neon-green border-neon-green/30 bg-neon-green/10",
+  Three: "text-neon-amber border-neon-amber/30 bg-neon-amber/10",
+  Security: "text-neon-red border-neon-red/30 bg-neon-red/10",
+};
 
-  const projects = [
-    {
-      title: "E-Commerce Platform",
-      description: `A full-featured online shopping platform with real-time inventory management.
-        Built with Next.js and TypeScript, this platform handles thousands of daily transactions.
-        Features include real-time inventory tracking, AI-powered product recommendations,
-        advanced search capabilities, and seamless payment processing with Stripe integration.
-        The platform achieved a 40% increase in conversion rates and 60% faster page load times.`,
-      image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800&auto=format&fit=crop&q=60",
-      tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
-      link: "https://example-ecommerce.com",
-      github: "https://github.com/example/ecommerce",
-      metrics: {
-        users: "100K+",
-        transactions: "500K+",
-        performance: "+60%"
-      }
-    },
-    {
-      title: "AI Task Manager",
-      description: `Smart task management system with AI-powered prioritization.
-        Leverages machine learning to automatically prioritize tasks based on user behavior and deadlines.
-        Includes features like natural language processing for task creation, smart categorization,
-        and predictive task completion estimates. The system helped increase team productivity by 35%.`,
-      image: "https://images.unsplash.com/photo-1676299081847-824916de030a?w=800&auto=format&fit=crop&q=60",
-      tags: ["React", "Python", "TensorFlow", "MongoDB"],
-      link: "https://ai-taskmanager.com",
-      github: "https://github.com/example/ai-tasks",
-      metrics: {
-        users: "50K+",
-        tasks: "1M+",
-        efficiency: "+35%"
-      }
-    },
-    {
-      title: "Real-time Analytics Dashboard",
-      description: `Interactive dashboard for monitoring business metrics in real-time.
-        Built with Vue.js and D3.js, this dashboard provides real-time insights into business performance.
-        Features include customizable widgets, advanced data visualization, automated reporting,
-        and predictive analytics. Helped clients reduce decision-making time by 50%.`,
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60",
-      tags: ["Vue.js", "D3.js", "Node.js", "WebSocket"],
-      link: "https://analytics-dashboard.com",
-      github: "https://github.com/example/analytics",
-      metrics: {
-        clients: "200+",
-        dataPoints: "10M+",
-        improvement: "+50%"
-      }
-    }
-  ];
+export default function PortfolioPage() {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        setActiveIndex((prev) => (prev > 0 ? prev - 1 : projects.length - 1));
-      } else if (e.key === "ArrowRight") {
-        setActiveIndex((prev) => (prev < projects.length - 1 ? prev + 1 : 0));
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [projects.length]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
-    setScrollLeft(containerRef.current?.scrollLeft || 0);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (containerRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 2;
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = scrollLeft - walk;
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+    fetchProjects().then(setProjects).catch(() => {});
+  }, []);
 
   return (
-    <main className="min-h-screen bg-black pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="min-h-screen bg-neural py-20 px-4">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Portfolio</h1>
-          <p className="text-gray-400 max-w-3xl mx-auto">
-            Explore my featured projects showcasing innovation and technical excellence.
-            <span className="block mt-2 text-sm text-gray-500">
-              Use arrow keys or swipe to navigate through projects
-            </span>
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-neon-cyan hover:underline font-mono mb-6">
+            <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+          </Link>
+          <h1 className="text-3xl sm:text-4xl font-bold font-mono mb-3">
+            <span className="text-neon-amber">Project</span> Vault
+          </h1>
+          <p className="text-gray-500 font-mono text-sm">
+            Live tools, AI scripts, and full-stack applications — each one a SaltedHash build.
           </p>
         </motion.div>
 
-        <div 
-          ref={containerRef}
-          className="relative h-[600px] perspective-1000 cursor-grab active:cursor-grabbing"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ scale: 0.8, rotateY: 45, x: 1000 }}
-                  animate={{
-                    scale: index === activeIndex ? 1 : 0.8,
-                    rotateY: index === activeIndex ? 0 : index < activeIndex ? -45 : 45,
-                    x: index === activeIndex ? 0 : index < activeIndex ? -1000 : 1000,
-                    zIndex: projects.length - Math.abs(index - activeIndex)
-                  }}
-                  exit={{ scale: 0.8, rotateY: -45, x: -1000 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute w-full max-w-3xl"
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  <div className="bg-yellow-500/5 rounded-xl border border-yellow-500/10 overflow-hidden shadow-xl backdrop-blur-sm">
-                    <div className="aspect-video relative">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    </div>
-                    <div className="p-8">
-                      <div className="flex items-start justify-between mb-4">
-                        <h3 className="text-2xl font-bold text-yellow-500">{project.title}</h3>
-                        <div className="flex space-x-4">
-                          <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                            <Github className="w-6 h-6 text-yellow-500 hover:text-yellow-400 transition-colors" />
-                          </Link>
-                          <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-6 h-6 text-yellow-500 hover:text-yellow-400 transition-colors" />
-                          </Link>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {projects.map((project, i) => {
+            const isSelected = selected === project.id;
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                layout
+                onClick={() => setSelected(isSelected ? null : project.id)}
+                className={`group relative p-6 rounded-xl glass-panel border cursor-pointer transition-all ${
+                  isSelected
+                    ? "border-neon-amber/40 shadow-[0_0_30px_rgba(245,158,11,0.1)]"
+                    : "border-neon-amber/10 hover:border-neon-amber/30"
+                }`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-neon-amber/20 to-neon-amber/5 flex items-center justify-center">
+                    <Code2 className="w-5 h-5 text-neon-amber" />
+                  </div>
+                  <span className="px-2 py-0.5 text-[10px] rounded-full bg-neon-green/20 text-neon-green font-mono">
+                    {project.status.toUpperCase()}
+                  </span>
+                </div>
+
+                <h3 className="text-base font-semibold text-white font-mono mb-2 group-hover:text-neon-amber transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-xs text-gray-500 font-mono mb-4 line-clamp-2 leading-relaxed">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {project.tech.map((t: string) => (
+                    <span
+                      key={t}
+                      className={`px-2 py-0.5 text-[10px] rounded-md border font-mono ${
+                        techColors[t] || "text-gray-400 border-gray-600/30 bg-gray-600/10"
+                      }`}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <AnimatePresence>
+                  {isSelected && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-4 border-t border-neon-amber/10 space-y-3">
+                        {project.highlights && (
+                          <div>
+                            <div className="text-[10px] text-gray-600 font-mono mb-2 uppercase tracking-wider">Highlights</div>
+                            <div className="space-y-1">
+                              {project.highlights.map((h: string) => (
+                                <div key={h} className="flex items-center gap-2 text-xs text-gray-400 font-mono">
+                                  <Sparkles className="w-3 h-3 text-neon-amber" />
+                                  {h}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex gap-3 pt-2">
+                          {project.demo && (
+                            <a
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-neon-amber/10 text-neon-amber border border-neon-amber/30 hover:bg-neon-amber/20 transition-all font-mono"
+                            >
+                              <Eye className="w-3 h-3" /> Live Demo
+                            </a>
+                          )}
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg glass-panel text-gray-400 border border-gray-700 hover:text-neon-cyan hover:border-neon-cyan/30 transition-all font-mono"
+                            >
+                              <Github className="w-3 h-3" /> Source
+                            </a>
+                          )}
                         </div>
                       </div>
-                      <p className={`text-gray-400 mb-6 ${selectedProject === index ? "" : "line-clamp-2"}`}>
-                        {project.description}
-                      </p>
-                      <div className="grid grid-cols-3 gap-4 mb-6">
-                        {Object.entries(project.metrics).map(([key, value]) => (
-                          <div key={key} className="text-center p-3 rounded-lg bg-yellow-500/5">
-                            <div className="text-yellow-500 font-bold">{value}</div>
-                            <div className="text-gray-500 text-sm capitalize">{key}</div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3 py-1 text-sm rounded-full bg-yellow-500/10 text-yellow-500"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <div className="flex justify-center mt-8 space-x-2">
-          {projects.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === activeIndex ? 'bg-yellow-500' : 'bg-yellow-500/20'
-              }`}
-            />
-          ))}
-        </div>
+        {projects.length === 0 && (
+          <div className="text-center py-20">
+            <Code2 className="w-12 h-12 mx-auto text-gray-700 mb-4" />
+            <p className="text-gray-500 font-mono">Loading projects...</p>
+          </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }
