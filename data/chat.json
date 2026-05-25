@@ -1,0 +1,26 @@
+{
+  "rooms": [
+    { "id": "general", "name": "General", "description": "General discussion about SaltedHash and tech" },
+    { "id": "projects", "name": "Projects", "description": "Talk about ongoing projects and ideas" },
+    { "id": "feedback", "name": "Feedback", "description": "Share feedback and suggestions" }
+  ],
+  "messages": [],
+  "autoReplies": {
+    "general": [
+      { "trigger": "hello|hi|hey", "response": "Hey! 👋 Welcome to SaltedHash. What brings you here today?" },
+      { "trigger": "who|what is saltedhash", "response": "SaltedHash is an AI-powered digital solutions platform founded by Vinay. We build intelligent tools — from ML models to full SaaS platforms." },
+      { "trigger": "services|offer|do you", "response": "We offer AI/ML solutions, Python automation, SPA/PWA development, and SaaS builds. Check /services for the full decision tree!" },
+      { "trigger": "contact|hire|work", "response": "Want to work together? Drop a message via the contact form or email dev.webstylevinay9994@gmail.com" }
+    ],
+    "projects": [
+      { "trigger": "seo|analyzer", "response": "The AI SEO Analyzer is one of our flagship tools. It scans sites, finds optimization gaps, and generates reports automatically." },
+      { "trigger": "taskpro|flow", "response": "TaskPro-Flow uses AI to prioritize your tasks, schedule smartly, and track progress. Try it at partyrock!" },
+      { "trigger": "interview|prep", "response": "InterviewPrep-Pro generates custom questions and gives AI feedback to help you ace interviews." }
+    ],
+    "feedback": [
+      { "trigger": "bug|issue|problem", "response": "Thanks for reporting! Please describe the issue in detail and I'll make sure Vinay looks into it." },
+      { "trigger": "suggestion|idea|feature", "response": "Great ideas fuel SaltedHash! Tell me more — what feature would you love to see?" },
+      { "trigger": "thanks|thank you|good", "response": "You're welcome! 🙌 Your support means the world to a solo builder." }
+    ]
+  }
+}

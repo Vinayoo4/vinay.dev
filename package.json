@@ -9,8 +9,7 @@
     "lint": "next lint",
     "server": "node server.js",
     "dev:full": "concurrently \"npm run dev\" \"npm run server\"",
-    "create-admin": "node scripts/create-admin.js",
-    "db:init": "node scripts/init-db.js"
+    "create-admin": "node scripts/create-admin.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -49,7 +48,6 @@
     "autoprefixer": "10.4.15",
     "axios": "^1.10.0",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^12.8.0",
     "body-parser": "^1.20.2",
     "bufferutil": "^4.0.9",
     "class-variance-authority": "^0.7.0",
@@ -63,7 +61,6 @@
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
     "express": "^4.18.3",
-    "express-rate-limit": "^8.3.1",
     "express-validator": "^7.2.1",
     "framer-motion": "^11.0.8",
     "input-otp": "^1.2.4",
@@ -72,12 +69,14 @@
     "mongoose": "^8.2.1",
     "next": "13.5.1",
     "next-themes": "^0.3.0",
+    "pdfjs-dist": "^3.11.174",
     "postcss": "8.4.30",
     "react": "18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.53.0",
     "react-icons": "^5.5.0",
+    "react-pdf": "^7.7.3",
     "react-resizable-panels": "^2.1.3",
     "recharts": "^2.12.7",
     "socket.io": "^4.7.4",
@@ -90,10 +89,5 @@
     "utf-8-validate": "^6.0.5",
     "vaul": "^0.9.9",
     "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/jsonwebtoken": "^9.0.10"
   }
 }

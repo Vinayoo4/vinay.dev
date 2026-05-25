@@ -1,0 +1,101 @@
+[
+  {
+    "id": "class-12",
+    "label": "Class 12 — PCM",
+    "status": "completed",
+    "year": "2021",
+    "description": "Completed higher secondary with Physics, Chemistry, Mathematics — the analytical foundation.",
+    "icon": "graduation-cap",
+    "color": "#06b6d4",
+    "children": ["btech-aiml"],
+    "proof": []
+  },
+  {
+    "id": "btech-aiml",
+    "label": "B.Tech CSE (AI/ML)",
+    "status": "in-progress",
+    "year": "2022–2026",
+    "description": "Pursuing Bachelor's in Computer Science specializing in Artificial Intelligence & Machine Learning.",
+    "icon": "cpu",
+    "color": "#a855f7",
+    "children": ["jp-morgan", "accenture", "reliance"],
+    "proof": []
+  },
+  {
+    "id": "jp-morgan",
+    "label": "J.P. Morgan — Virtual Intern",
+    "status": "completed",
+    "year": "2024",
+    "description": "Completed J.P. Morgan's virtual experience program — financial data analysis and dashboarding.",
+    "icon": "briefcase",
+    "color": "#22c55e",
+    "children": ["saltedhash-foundation"],
+    "proof": ["/certificate/jp-morgan.jpg"]
+  },
+  {
+    "id": "accenture",
+    "label": "Accenture — Virtual Intern",
+    "status": "completed",
+    "year": "2024",
+    "description": "Accenture's virtual program covering technology consulting, data analysis, and client delivery.",
+    "icon": "briefcase",
+    "color": "#22c55e",
+    "children": ["saltedhash-foundation"],
+    "proof": ["/certificate/accenture.jpg"]
+  },
+  {
+    "id": "reliance",
+    "label": "Reliance — Virtual Intern",
+    "status": "completed",
+    "year": "2024",
+    "description": "Reliance Industries virtual simulation — business analysis and digital transformation.",
+    "icon": "briefcase",
+    "color": "#22c55e",
+    "children": ["saltedhash-foundation"],
+    "proof": ["/certificate/reliance.jpg"]
+  },
+  {
+    "id": "saltedhash-foundation",
+    "label": "SaltedHash — Founding",
+    "status": "in-progress",
+    "year": "2025–Present",
+    "description": "Founded SaltedHash — an AI-powered digital solutions platform. Building the future of automated business intelligence.",
+    "icon": "sparkles",
+    "color": "#f59e0b",
+    "children": [],
+    "proof": []
+  },
+  {
+    "id": "financial-cert-1",
+    "label": "Advanced Technical Analysis",
+    "status": "completed",
+    "year": "2024",
+    "description": "In-depth training on technical analysis, chart patterns, and market indicators.",
+    "icon": "chart-line",
+    "color": "#ef4444",
+    "children": [],
+    "proof": ["/certificate/advancedtechincalanaylsisindss.jpg"]
+  },
+  {
+    "id": "financial-cert-2",
+    "label": "Fundamentals of Stocks",
+    "status": "completed",
+    "year": "2024",
+    "description": "Core principles of stock market investing — valuation, fundamentals, and long-term strategy.",
+    "icon": "chart-line",
+    "color": "#ef4444",
+    "children": [],
+    "proof": ["/certificate/fundamentalstocksindss.jpg"]
+  },
+  {
+    "id": "financial-cert-3",
+    "label": "Portfolio Management",
+    "status": "completed",
+    "year": "2024",
+    "description": "Portfolio optimization, risk management, and asset allocation strategies.",
+    "icon": "chart-line",
+    "color": "#ef4444",
+    "children": [],
+    "proof": ["/certificate/potfoliomanagementssind.jpg"]
+  }
+]

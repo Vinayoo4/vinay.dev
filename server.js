@@ -1,102 +1,111 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
-
-// Import MongoDB connection utility
-const connectDB = require('./lib/mongo');
-
-// Import routes
-const contactRoutes = require('./routes/contactRoutes');
-const chatRoutes = require('./routes/chatRoutes');
-const authRoutes = require('./routes/authRoutes');
-const newsletterRoutes = require('./routes/newsletterRoutes');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allowed origins for CORS
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
-  : ['http://localhost:3000'];
-
-// Middleware
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. curl, mobile apps)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-    callback(new Error('Origin not allowed by CORS policy'));
-  },
-  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'x-auth-token', 'Authorization'],
-}));
+app.use(cors());
 app.use(express.json());
-
-// Connect to MongoDB
-connectDB();
-
-// API Routes
-app.use('/api/contact', contactRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/newsletter', newsletterRoutes);
-
-// Socket.io setup for real-time chat
-const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
-  cors: {
-    origin: allowedOrigins.length === 1 && process.env.NODE_ENV === 'development'
-      ? '*'
-      : allowedOrigins,
-    methods: ['GET', 'POST']
-  }
-});
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-  
-  socket.on('join-room', (roomId) => {
-    socket.join(roomId);
-    console.log(`User joined room: ${roomId}`);
-  });
-
-  socket.on('send-message', async (messageData) => {
-    try {
-      const ChatMessage = require('./models/ChatMessage');
-      const { user, message, room } = messageData;
-      const newMessage = new ChatMessage({ user, message, room: room || 'general' });
-      await newMessage.save();
-      io.to(messageData.room || 'general').emit('receive-message', newMessage);
-    } catch (error) {
-      console.error('Error handling socket message:', error);
-    }
-  });
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
-
-// Serve static files from the 'public' directory if needed
 app.use(express.static('public'));
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'Server is running' });
+const dataDir = path.join(__dirname, 'data');
+
+const readJSON = (file) => {
+  try { return JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf-8')); }
+  catch { return null; }
+};
+
+const writeJSON = (file, data) => {
+  fs.writeFileSync(path.join(dataDir, file), JSON.stringify(data, null, 2));
+};
+
+app.get('/api/services', (_, res) => {
+  const data = readJSON('services.json');
+  data ? res.json(data) : res.status(500).json({ error: 'Failed to load services' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Something went wrong on the server',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+app.get('/api/projects', (_, res) => {
+  const data = readJSON('projects.json');
+  data ? res.json(data) : res.status(500).json({ error: 'Failed to load projects' });
+});
+
+app.get('/api/certifications', (_, res) => {
+  const data = readJSON('certifications.json');
+  data ? res.json(data) : res.status(500).json({ error: 'Failed to load certifications' });
+});
+
+app.get('/api/chat', (_, res) => {
+  const data = readJSON('chat.json');
+  data ? res.json(data) : res.status(500).json({ error: 'Failed to load chat' });
+});
+
+app.post('/api/chat', (req, res) => {
+  const { room, user, message } = req.body;
+  if (!room || !user || !message) {
+    return res.status(400).json({ error: 'Missing fields' });
+  }
+
+  const data = readJSON('chat.json');
+  const newMsg = {
+    id: Date.now().toString(),
+    room, user, message,
+    timestamp: new Date().toISOString(),
+  };
+  data.messages.push(newMsg);
+
+  const roomReplies = data.autoReplies[room] || data.autoReplies['general'];
+  let autoReply = null;
+  const lower = message.toLowerCase();
+  for (const rule of roomReplies) {
+    const triggers = rule.trigger.split('|');
+    if (triggers.some((t) => lower.includes(t))) {
+      autoReply = {
+        id: (Date.now() + 1).toString(),
+        room, user: 'SaltedHash AI',
+        message: rule.response,
+        timestamp: new Date().toISOString(),
+      };
+      data.messages.push(autoReply);
+      break;
+    }
+  }
+
+  writeJSON('chat.json', data);
+  res.json({ success: true, message: newMsg, autoReply });
+});
+
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Missing fields' });
+  }
+
+  const contactPath = path.join(dataDir, 'contact.json');
+  let contacts = [];
+  try { contacts = JSON.parse(fs.readFileSync(contactPath, 'utf-8')); }
+  catch { contacts = []; }
+
+  contacts.push({
+    id: Date.now().toString(),
+    name, email, message,
+    timestamp: new Date().toISOString(),
   });
+
+  fs.writeFileSync(contactPath, JSON.stringify(contacts, null, 2));
+  res.json({ success: true, message: 'Message sent successfully' });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.get('/api/health', (_, res) => {
+  res.json({ status: 'ok', message: 'SaltedHash backend running (JSON-only)' });
+});
+
+app.use((err, _, res, __) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: 'Internal server error' });
+});
+
+app.listen(PORT, () => {
+  console.log(`SaltedHash backend running on port ${PORT} (JSON-only)`);
 });

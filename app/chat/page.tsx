@@ -1,156 +1,175 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Send, MessageSquare } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { fetchChatData, sendChatMessage } from "@/lib/data";
+import { Send, MessageSquare, Hexagon, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
-// Define the ChatMessage type
-type ChatMessage = {
+interface ChatMsg {
   id: string;
+  room: string;
   user: string;
   message: string;
-  created_at: string;
-};
+  timestamp: string;
+}
 
-export default function Chat() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [newMessage, setNewMessage] = useState("");
+interface Room {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export default function ChatPage() {
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [messages, setMessages] = useState<ChatMsg[]>([]);
+  const [currentRoom, setCurrentRoom] = useState("general");
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [roomId, setRoomId] = useState("general");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch(`/api/chat?room=${encodeURIComponent(roomId)}`);
-        if (!res.ok) throw new Error('Failed to load messages');
-        const data = await res.json();
-        setMessages(data);
-      } catch {
-        setError("Could not load chat messages.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMessages();
-  }, [roomId]);
+    fetchChatData().then((data) => {
+      setRooms(data.rooms || []);
+      setMessages(data.messages || []);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
+    if (!input.trim() || loading) return;
     setLoading(true);
-    setError("");
+
+    const temp: ChatMsg = {
+      id: Date.now().toString(),
+      room: currentRoom,
+      user: "You",
+      message: input.trim(),
+      timestamp: new Date().toISOString(),
+    };
+    setMessages((prev) => [...prev, temp]);
+    setInput("");
+
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: "Anonymous", message: newMessage, room: roomId })
-      });
-      if (!res.ok) throw new Error('Failed to send message');
-      const { data } = await res.json();
-      setMessages((prev) => [...prev, data]);
-      setNewMessage("");
+      const res = await sendChatMessage(currentRoom, "You", temp.message);
+      if (res.autoReply) {
+        setMessages((prev) => [...prev, res.autoReply]);
+      }
     } catch {
-      setError("Could not send message.");
-    } finally {
-      setLoading(false);
+      // fails silently — data stays locally
     }
+    setLoading(false);
   };
 
-  const rooms = [
-    { id: "general", name: "General" },
-    { id: "tech", name: "Technology" },
-    { id: "finance", name: "Finance" },
-    { id: "design", name: "Design" }
-  ];
+  const roomMessages = messages.filter((m) => !m.room || m.room === currentRoom);
 
   return (
-    <main className="min-h-screen bg-black pt-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="min-h-screen bg-neural py-20 px-4">
+      <div className="max-w-4xl mx-auto">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Anonymous Chat</h1>
-          <p className="text-gray-400">
-            Join the conversation anonymously. All messages are stored locally.
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-neon-cyan hover:underline font-mono mb-6">
+            <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+          </Link>
+          <h1 className="text-3xl sm:text-4xl font-bold font-mono mb-3">
+            <span className="text-neon-purple">Neural</span> Chat
+          </h1>
+          <p className="text-gray-500 font-mono text-sm">
+            Talk to SaltedHash AI or chat with visitors. Auto-replies fire on keywords.
           </p>
         </motion.div>
 
-        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-
-        <div className="flex space-x-4 mb-6 overflow-x-auto pb-2">
+        <div className="flex flex-wrap gap-2 mb-6">
           {rooms.map((room) => (
             <button
               key={room.id}
-              onClick={() => setRoomId(room.id)}
-              className={`px-4 py-2 rounded-full flex items-center space-x-1 whitespace-nowrap transition-colors ${roomId === room.id ? 'bg-yellow-500 text-black' : 'bg-yellow-500/10 text-gray-300 hover:bg-yellow-500/20'}`}
+              onClick={() => setCurrentRoom(room.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono transition-all ${
+                currentRoom === room.id
+                  ? "bg-neon-purple/20 text-neon-purple border border-neon-purple/30"
+                  : "glass-panel text-gray-400 border border-gray-800 hover:border-neon-purple/20"
+              }`}
             >
-              <MessageSquare className="w-4 h-4" />
-              <span>{room.name}</span>
+              <MessageSquare className="w-3.5 h-3.5" />
+              {room.name}
             </button>
           ))}
         </div>
 
-        <div className="bg-yellow-500/5 border border-yellow-500/10 rounded-xl overflow-hidden flex flex-col h-[60vh]">
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {loading ? (
-              <div className="text-center text-gray-400">Loading...</div>
-            ) : messages.length === 0 ? (
-              <div className="h-full flex items-center justify-center">
-                <p className="text-gray-500">No messages yet. Start the conversation!</p>
+        <div className="rounded-2xl glass-panel border border-neon-purple/10 overflow-hidden">
+          <div className="h-[50vh] overflow-y-auto p-4 space-y-3">
+            {roomMessages.length === 0 && (
+              <div className="h-full flex flex-col items-center justify-center text-center">
+                <Hexagon className="w-10 h-10 text-neon-purple/30 mb-3" strokeWidth={1} />
+                <p className="text-sm text-gray-600 font-mono">No messages yet.</p>
+                <p className="text-xs text-gray-700 font-mono mt-1">Type something to start the conversation.</p>
               </div>
-            ) : (
-              messages.map((msg) => (
+            )}
+
+            <AnimatePresence>
+              {roomMessages.map((msg) => (
                 <motion.div
                   key={msg.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-yellow-500/10 rounded-lg p-3 max-w-[80%]">
-                  <p className="text-xs text-yellow-500/70 mb-1 font-medium">{msg.user}</p>
-                  <p className="text-gray-300">{msg.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(msg.created_at).toLocaleTimeString()}
-                  </p>
+                  initial={{ opacity: 0, x: msg.user === "You" ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className={`flex ${msg.user === "You" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-[80%] p-3 rounded-xl ${
+                      msg.user === "You"
+                        ? "bg-neon-purple/20 border border-neon-purple/20"
+                        : msg.user === "SaltedHash AI"
+                        ? "bg-neon-cyan/10 border border-neon-cyan/20"
+                        : "glass-panel border border-gray-800"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-[10px] font-mono ${
+                        msg.user === "You" ? "text-neon-purple" :
+                        msg.user === "SaltedHash AI" ? "text-neon-cyan" : "text-gray-500"
+                      }`}>
+                        {msg.user}
+                      </span>
+                      {msg.user === "SaltedHash AI" && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-neon-pulse" />
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-300 font-mono leading-relaxed">{msg.message}</p>
+                  </div>
                 </motion.div>
-              ))
-            )}
-            <div ref={messagesEndRef} />
+              ))}
+            </AnimatePresence>
+            <div ref={bottomRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="border-t border-yellow-500/10 p-4 flex space-x-2">
+          <form onSubmit={handleSend} className="border-t border-neon-purple/10 p-4 flex gap-2">
             <input
               type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 bg-black/50 border border-yellow-500/20 rounded-lg px-4 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500/50"
-              disabled={loading}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#050505] border border-gray-800 focus:border-neon-purple/40 text-sm text-gray-200 font-mono outline-none transition-colors"
             />
             <button
               type="submit"
-              disabled={!newMessage.trim() || loading}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg px-4 py-2 flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!input.trim() || loading}
+              className="px-4 py-2.5 rounded-xl bg-neon-purple/20 border border-neon-purple/30 text-neon-purple hover:bg-neon-purple/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4" />
             </button>
           </form>
         </div>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-500 text-sm">
-            Note: This is a public chat room. Please be respectful and follow community guidelines.
-          </p>
-        </div>
+        <p className="text-[10px] text-gray-700 font-mono mt-4 text-center">
+          Messages are stored locally in /data/chat.json. Auto-replies are rule-based, not AI-generated.
+        </p>
       </div>
-    </main>
+    </div>
   );
 }
