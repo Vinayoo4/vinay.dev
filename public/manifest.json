@@ -1,24 +1,23 @@
 {
-  "name": "SaltedHash — AI-Powered Digital Solutions",
-  "short_name": "SaltedHash",
-  "description": "AI/ML solutions, Python automation, SPA/PWA development, and SaaS builds by Vinay.",
+  "name": "SALTED HASH",
+  "short_name": "Salt",
+  "description": "Problem-first venture studio and product lab.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#06b6d4",
-  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#233CB5",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "/icons/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "/icons/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
