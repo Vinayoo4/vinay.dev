@@ -1,0 +1,5 @@
+{
+  "updatedAt": "2026-05-26T00:00:00.000Z",
+  "source": "seed",
+  "note": "Tenant catalog is also represented in lib/tenants.ts for runtime defaults."
+}

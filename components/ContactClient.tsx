@@ -68,9 +68,9 @@ export default function ContactClient() {
           animate={{ opacity: 1 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Let's Connect</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Let&apos;s Connect</h1>
           <p className="text-gray-400 max-w-3xl mx-auto">
-            I'm always interested in hearing about new projects and opportunities.
+            I&apos;m always interested in hearing about new projects and opportunities.
             Feel free to reach out through any of the channels below.
           </p>
         </motion.div>
@@ -82,13 +82,13 @@ export default function ContactClient() {
               animate={{ opacity: 1, x: 0 }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              href="mailto:contact@vinay.dev"
+              href="mailto:contact@devvinay.me"
               className="flex items-center justify-center space-x-3 p-6 rounded-xl bg-yellow-500/5 border border-yellow-500/10 hover:bg-yellow-500/10 hover:border-yellow-500/30 transition-all duration-300 group"
             >
               <Mail className="w-8 h-8 text-yellow-500 group-hover:text-yellow-400 transition-colors" />
               <div className="text-left">
                 <p className="text-gray-400 group-hover:text-gray-300 transition-colors">Email me at</p>
-                <p className="text-gray-300 font-semibold group-hover:text-yellow-500 transition-colors">contact@vinay.dev</p>
+                <p className="text-gray-300 font-semibold group-hover:text-yellow-500 transition-colors">contact@devvinay.me</p>
               </div>
             </motion.a>
 
@@ -160,7 +160,7 @@ export default function ContactClient() {
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   required
                   className="w-full px-4 py-2 bg-black/50 border border-yellow-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 text-gray-200"
-                  placeholder="your.email@example.com"
+                  placeholder="your.email@devvinay.me"
                 />
               </div>
               <div>

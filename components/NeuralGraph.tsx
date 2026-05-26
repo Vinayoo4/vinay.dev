@@ -194,7 +194,7 @@ export function NeuralGraph({ nodes, width = 900, height = 500 }: NeuralGraphPro
             {selectedNode.details?.caseStudy && (
               <div className="mt-3 p-3 rounded-lg bg-neon-cyan/5 border border-neon-cyan/10">
                 <p className="text-xs text-gray-400 font-mono">
-                  <span className="text-neon-cyan">// case study</span> {selectedNode.details.caseStudy}
+                  <span className="text-neon-cyan">case study:</span> {selectedNode.details.caseStudy}
                 </p>
               </div>
             )}
