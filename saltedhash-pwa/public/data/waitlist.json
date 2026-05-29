@@ -1,0 +1,17 @@
+{
+  "submissions": [
+    {
+      "id": "waitlist-001",
+      "email": "user@example.com",
+      "name": "John Doe",
+      "app": "accounting-precision",
+      "categories": ["vertical-saas", "commerce"],
+      "submittedAt": "2026-05-29T18:47:00Z"
+    }
+  ],
+  "config": {
+    "appName": "SALTed HASH",
+    "successMessage": "You're on the waitlist! We'll notify you when your app launches.",
+    "duplicateMessage": "You're already on the waitlist for this app."
+  }
+}
