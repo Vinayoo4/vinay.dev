@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": "user-001",
+      "email": "user@example.com",
+      "name": "John Doe",
+      "passwordHash": "sampleSalt123:cd0995f0e99e74f73b68b9c446621ebf1182b6069de7d165eded63776de096f3",
+      "token": null,
+      "tokenExpiry": null,
+      "createdAt": "2026-05-29T18:47:00Z",
+      "lastLogin": null,
+      "appAccess": {
+        "accounting-precision": { "hasAccess": true, "subscribedAt": "2026-05-29T18:47:00Z", "plan": "early-bird" },
+        "dentistpro360": { "hasAccess": false, "subscribedAt": null, "plan": null }
+      },
+      "preferences": { "theme": "light", "language": "en", "notifications": true }
+    }
+  ],
+  "config": {
+    "tokenExpiryDays": 30,
+    "passwordMinLength": 8,
+    "allowRegistration": true
+  }
+}

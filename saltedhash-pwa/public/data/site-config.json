@@ -1,0 +1,27 @@
+{
+  "site": {
+    "name": "SALTed HASH",
+    "tagline": "Product studio building 28+ vertical SaaS for underserved markets",
+    "description": "From accounting automation to dentist clinic management to creator tools — we build category-defining SaaS for niches nobody else serves.",
+    "author": "Vinay",
+    "authorTitle": "BTech AI/ML Student + Entrepreneur",
+    "authorBio": "Building EmporiumVipani (multi-category e-commerce) and SALTED HASH (product studio). Final-year BTech AI/ML student focused on vertical SaaS for underserved markets.",
+    "email": "contact@saltedhash.com",
+    "location": "Patna, Bihar, India",
+    "hubUrl": "https://saltedhash.com"
+  },
+  "social": {
+    "linkedin": "https://linkedin.com/company/saltedhash",
+    "twitter": "https://twitter.com/saltedhash",
+    "github": "https://github.com/saltedhash"
+  },
+  "colors": {
+    "primary": "#6366f1",
+    "secondary": "#8b5cf6",
+    "accent": "#ec4899"
+  },
+  "auth": {
+    "tokenExpiryDays": 30,
+    "passwordMinLength": 8
+  }
+}
