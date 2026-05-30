@@ -1,0 +1,84 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Hexagon, Lock, Mail, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Placeholder for real auth
+    router.push("/dashboard");
+  };
+
+  return (
+    <div className="min-h-screen bg-neural flex flex-col items-center justify-center px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md p-8 glass-panel rounded-2xl border border-neon-cyan/20 relative overflow-hidden"
+      >
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-cyan" />
+
+        <div className="flex justify-center mb-6">
+          <div className="relative">
+            <Hexagon className="w-12 h-12 text-neon-cyan animate-neon-pulse" strokeWidth={1.5} />
+            <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-neon-cyan font-mono">SH</span>
+          </div>
+        </div>
+
+        <h1 className="text-2xl font-bold text-center text-white font-mono mb-2">Platform Identity</h1>
+        <p className="text-center text-gray-400 font-mono text-sm mb-8">Sign in to access all SALTEDHASH modules</p>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-xs font-mono text-gray-400 mb-1">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-gray-900/50 border border-neon-cyan/20 rounded-xl pl-10 pr-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/50 transition-all"
+                placeholder="system@saltedhash.dev"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-mono text-gray-400 mb-1">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-gray-900/50 border border-neon-cyan/20 rounded-xl pl-10 pr-4 py-3 text-white font-mono text-sm focus:outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/50 transition-all"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-neon-cyan text-gray-900 font-bold hover:bg-neon-cyan/90 transition-all font-mono text-sm mt-4"
+          >
+            Authenticate <ArrowRight className="w-4 h-4" />
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-xs font-mono text-gray-500">
+          Need access? <Link href="/auth/register" className="text-neon-cyan hover:underline">Request Identity</Link>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
