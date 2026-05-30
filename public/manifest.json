@@ -1,7 +1,7 @@
 {
-  "name": "SaltedHash — AI-Powered Digital Solutions",
-  "short_name": "SaltedHash",
-  "description": "AI/ML solutions, Python automation, SPA/PWA development, and SaaS builds by Vinay.",
+  "name": "SALTEDHASH Umbrella Platform",
+  "short_name": "SALTEDHASH",
+  "description": "Centralized PWA shell, app launcher, and control center for the SALTEDHASH ecosystem.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050505",
