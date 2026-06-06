@@ -39,15 +39,24 @@ This is a personal portfolio website built with Next.js and MongoDB. It includes
    npm install
    ```
 3. Set up environment variables:
-   - Create a `.env` file in the root directory with the following variables:
+   - Create a `.env` file in the root directory using the `.env.example` template:
      ```
-     MONGODB_URI=your_mongodb_connection_string
-     PORT=5000
+     # Server-side secrets
+     SUPABASE_URL=https://zzfvnpakhuazlanakcyv.supabase.co
+     SUPABASE_SERVICE_ROLE_KEY=[SECRET_KEY_HERE]
+     DATABASE_URL=[DIRECT_CONNECTION_STRING_OR_SERVER_DB_URL]
      ```
-   - Create a `.env.local` file in the root directory with:
+   - Create a `.env.local` file in the root directory with public variables:
      ```
-     NEXT_PUBLIC_API_URL=http://localhost:5000
+     NEXT_PUBLIC_SUPABASE_URL=https://zzfvnpakhuazlanakcyv.supabase.co
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=[PUBLISHABLE_KEY_HERE]
      ```
+
+### Supabase Setup
+This project uses Supabase as the central shared backend. To develop locally or deploy:
+- Run `supabase login` and `supabase link --project-ref zzfvnpakhuazlanakcyv`
+- Start local development with `supabase start`
+- Apply migrations with `supabase db push`
 
 ### Running the Application
 
