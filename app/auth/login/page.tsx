@@ -9,12 +9,33 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for real auth
-    router.push("/dashboard");
+    setError(null);
+    setLoading(true);
+
+    try {
+      const { supabase } = await import('@/lib/supabaseClient');
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "An error occurred");
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +56,12 @@ export default function LoginPage() {
 
         <h1 className="text-2xl font-bold text-center text-white font-mono mb-2">Platform Identity</h1>
         <p className="text-center text-gray-400 font-mono text-sm mb-8">Sign in to access all SALTEDHASH modules</p>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm font-mono p-3 rounded-xl mb-6 text-center">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -69,9 +96,10 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-neon-cyan text-gray-900 font-bold hover:bg-neon-cyan/90 transition-all font-mono text-sm mt-4"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-neon-cyan text-gray-900 font-bold hover:bg-neon-cyan/90 transition-all font-mono text-sm mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Authenticate <ArrowRight className="w-4 h-4" />
+            {loading ? 'Authenticating...' : 'Authenticate'} <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
