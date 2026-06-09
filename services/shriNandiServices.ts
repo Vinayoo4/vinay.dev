@@ -1,16 +1,25 @@
-import { supabase } from '../lib/supabaseClient'
-import { SyncQueue } from '../lib/syncQueue'
+import { databaseService } from '@/services/databaseService';
+import { authService } from '@/services/authService';
+import { SyncQueue } from '../lib/syncQueue';
+import { Query } from 'appwrite';
+
+const SERVICES_COLLECTION_ID = process.env.NEXT_PUBLIC_SERVICES_COLLECTION_ID || process.env.SERVICES_COLLECTION_ID || 'services';
+const LEADS_COLLECTION_ID = process.env.NEXT_PUBLIC_LEADS_COLLECTION_ID || process.env.LEADS_COLLECTION_ID || 'leads';
+const BOOKINGS_COLLECTION_ID = process.env.NEXT_PUBLIC_BOOKINGS_COLLECTION_ID || process.env.BOOKINGS_COLLECTION_ID || 'consultation_bookings';
+const CLIENT_PROJECTS_COLLECTION_ID = process.env.NEXT_PUBLIC_CLIENT_PROJECTS_COLLECTION_ID || process.env.CLIENT_PROJECTS_COLLECTION_ID || 'client_projects';
 
 export async function listServices() {
-  const { data, error } = await supabase
-    .from('services')
-    .select('*')
-    .eq('brand_code', 'shri-nandi')
-    .eq('status', 'active')
-    .order('created_at', { ascending: false })
-
-  if (error) throw error
-  return data ?? []
+  try {
+    const data = await databaseService.listDocuments(SERVICES_COLLECTION_ID, [
+        Query.equal('brand_code', 'shri-nandi'),
+        Query.equal('status', 'active'),
+        Query.orderDesc('created_at')
+    ]);
+    return data.documents ?? [];
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    throw error;
+  }
 }
 
 export async function createLead(payload: {
@@ -26,24 +35,20 @@ export async function createLead(payload: {
       phone: payload.phone ?? null,
       source: payload.source ?? 'website',
       notes: payload.notes ?? null
-  }
+  };
 
   if (typeof navigator !== 'undefined' && !navigator.onLine) {
-    SyncQueue.addAction({ type: 'INSERT', table: 'leads', payload: insertPayload });
+    SyncQueue.addAction({ type: 'INSERT', table: LEADS_COLLECTION_ID, payload: insertPayload });
     return insertPayload; // Optimistic return
   }
 
-  const { data, error } = await supabase
-    .from('leads')
-    .insert(insertPayload)
-    .select()
-    .single()
-
-  if (error) {
-     SyncQueue.addAction({ type: 'INSERT', table: 'leads', payload: insertPayload });
+  try {
+     const data = await databaseService.createDocument(LEADS_COLLECTION_ID, insertPayload);
+     return data;
+  } catch (error) {
+     SyncQueue.addAction({ type: 'INSERT', table: LEADS_COLLECTION_ID, payload: insertPayload });
      return insertPayload; // Optimistic return
   }
-  return data
 }
 
 export async function bookConsultation(payload: {
@@ -51,40 +56,38 @@ export async function bookConsultation(payload: {
   booking_time: string
   notes?: string
 }) {
-  const { data: sessionData } = await supabase.auth.getSession()
-  const userId = sessionData.session?.user.id
+  const user = await authService.getCurrentUser();
+  const userId = user?.$id;
 
   const insertPayload = {
       service_id: payload.service_id,
       booking_time: payload.booking_time,
       notes: payload.notes ?? null,
       user_id: userId
-  }
+  };
 
   if (typeof navigator !== 'undefined' && !navigator.onLine) {
-    SyncQueue.addAction({ type: 'INSERT', table: 'consultation_bookings', payload: insertPayload });
+    SyncQueue.addAction({ type: 'INSERT', table: BOOKINGS_COLLECTION_ID, payload: insertPayload });
     return insertPayload; // Optimistic return
   }
 
-  const { data, error } = await supabase
-    .from('consultation_bookings')
-    .insert(insertPayload)
-    .select()
-    .single()
-
-  if (error) {
-     SyncQueue.addAction({ type: 'INSERT', table: 'consultation_bookings', payload: insertPayload });
+  try {
+     const data = await databaseService.createDocument(BOOKINGS_COLLECTION_ID, insertPayload);
+     return data;
+  } catch (error) {
+     SyncQueue.addAction({ type: 'INSERT', table: BOOKINGS_COLLECTION_ID, payload: insertPayload });
      return insertPayload; // Optimistic return
   }
-  return data
 }
 
 export async function listClientProjects() {
-  const { data, error } = await supabase
-    .from('client_projects')
-    .select('*')
-    .order('created_at', { ascending: false })
-
-  if (error) throw error
-  return data ?? []
+  try {
+     const data = await databaseService.listDocuments(CLIENT_PROJECTS_COLLECTION_ID, [
+         Query.orderDesc('created_at')
+     ]);
+     return data.documents ?? [];
+  } catch (error) {
+     console.error("Error fetching client projects:", error);
+     throw error;
+  }
 }

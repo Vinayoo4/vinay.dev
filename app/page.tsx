@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Hexagon, LayoutGrid, Zap, Shield, ArrowRight, ChevronDown, Activity, Globe, Image as ImageIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, useMotionTemplate } from "framer-motion";
+import { Hexagon, LayoutGrid, Zap, Shield, ArrowRight, ChevronDown, Activity, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { client } from "@/lib/appwrite";
 
@@ -19,29 +19,32 @@ const quickLinks = [
 ];
 
 export default function HomePage() {
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+
+  const backgroundGradient = useMotionTemplate`radial-gradient(circle at ${useTransform(pointerX, x => x * 100)}% ${useTransform(pointerY, y => y * 100)}%, rgba(6,182,212,0.08) 0%, transparent 60%)`;
 
   useEffect(() => {
     // Ping the Appwrite backend server to verify the setup
     client.ping().then(() => console.log('Appwrite setup verified successfully.')).catch(console.error);
 
-    const handleMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    const handlePointerMove = (e: MouseEvent) => {
+        pointerX.set(e.clientX / window.innerWidth);
+        pointerY.set(e.clientY / window.innerHeight);
     };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
+
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, [pointerX, pointerY]);
 
   return (
     <div className="min-h-screen bg-neural">
       <section ref={containerRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-4">
         <div className="absolute inset-0 bg-grid opacity-40" />
         <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full"
-          style={{
-            background: `radial-gradient(circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(6,182,212,0.08) 0%, transparent 60%)`,
-          }}
+          className="absolute w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: backgroundGradient }}
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />

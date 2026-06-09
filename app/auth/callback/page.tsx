@@ -1,7 +1,10 @@
 "use client";
 import { useEffect } from 'react';
-import { supabase } from '../../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import { account } from '@/lib/appwrite';
+import { authService } from '@/services/authService';
+import { databaseService } from '@/services/databaseService';
+import { ID } from 'appwrite';
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -17,33 +20,36 @@ export default function AuthCallbackPage() {
         return;
       }
 
-      if (!code) {
-        router.push('/auth/login?error=no-code');
-        return;
-      }
+      // Appwrite typically handles OAuth callbacks differently (via a success URL redirection)
+      // where the session is automatically created, or by directly verifying a magic URL token.
+      // If this is an OAuth callback with tokens, we attempt to get the current session.
+      try {
+        const user = await authService.getCurrentUser();
 
-      const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+        if (user) {
+          // Sync profile to database if it doesn't exist
+          try {
+             const PROFILES_COLLECTION_ID = process.env.NEXT_PUBLIC_PROFILES_COLLECTION_ID || process.env.PROFILES_COLLECTION_ID || 'profiles';
+             await databaseService.createDocument(PROFILES_COLLECTION_ID, {
+                email: user.email,
+                full_name: user.name,
+                role: 'user',
+                status: 'active'
+             }, user.$id);
+          } catch(e: any) {
+             // If document already exists, this is fine
+             if (e.code !== 409) {
+                console.error("Failed to sync profile:", e);
+             }
+          }
 
-      if (exchangeError || !data.session) {
+          router.push('/');
+        } else {
+          router.push('/auth/login?error=no-session');
+        }
+      } catch (err) {
         router.push('/auth/login?error=callback-failed');
-        return;
       }
-
-      const { data: sessionData } = await supabase.auth.getSession();
-      const user = sessionData.session?.user;
-
-      if (user) {
-        await supabase.from('profiles').upsert({
-          id: user.id,
-          email: user.email ?? null,
-          full_name: user.user_metadata?.full_name ?? user.user_metadata?.name ?? null,
-          avatar_url: user.user_metadata?.avatar_url ?? null,
-          role: 'user',
-          status: 'active'
-        });
-      }
-
-      router.push('/');
     }
 
     handleAuthCallback();
