@@ -83,7 +83,7 @@ export default function ModulesPage() {
 
         {filteredModules.length === 0 && (
           <div className="text-center py-20 text-gray-500 font-mono">
-            No modules found matching "{search}"
+            No modules found matching &quot;{search}&quot;
           </div>
         )}
       </div>

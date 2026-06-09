@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from "framer-motion";
 import { GalleryExhibit } from "@/components/gallery/GalleryExhibit";
 import { Database, Brain, Lock, Settings, Layout, Code, Activity, Hexagon, ArrowDown } from "lucide-react";
 import Link from "next/link";
@@ -16,26 +16,28 @@ const galleryModules = [
 ] as const;
 
 export default function GalleryPage() {
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+  const backgroundGradient = useMotionTemplate`radial-gradient(circle at ${useTransform(pointerX, x => x * 100)}% ${useTransform(pointerY, y => y * 100)}%, rgba(6,182,212,0.06) 0%, transparent 40%)`;
+
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
 
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+        pointerX.set(e.clientX / window.innerWidth);
+        pointerY.set(e.clientY / window.innerHeight);
     };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
+    window.addEventListener("pointermove", handleMove);
+    return () => window.removeEventListener("pointermove", handleMove);
+  }, [pointerX, pointerY]);
 
   return (
     <div className="min-h-screen bg-[#020202] text-white relative selection:bg-neon-cyan/30">
       {/* Interactive Spotlight */}
       <motion.div
         className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background: `radial-gradient(circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(6,182,212,0.06) 0%, transparent 40%)`,
-        }}
+        style={{ background: backgroundGradient }}
       />
 
       {/* Hero Section */}

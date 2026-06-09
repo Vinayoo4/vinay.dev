@@ -68,9 +68,9 @@ export default function ContactClient() {
           animate={{ opacity: 1 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Let's Connect</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-6">Let&apos;s Connect</h1>
           <p className="text-gray-400 max-w-3xl mx-auto">
-            I'm always interested in hearing about new projects and opportunities.
+            I&apos;m always interested in hearing about new projects and opportunities.
             Feel free to reach out through any of the channels below.
           </p>
         </motion.div>

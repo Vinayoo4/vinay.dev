@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Hexagon, Lock, Mail, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { authService } from "@/services/authService";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,18 +20,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { supabase } = await import('@/lib/supabaseClient');
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-
+      await authService.login(email, password);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "An error occurred");

@@ -1,5 +1,5 @@
 // Queue manager for offline-first local behavior
-// It stores local drafts and pending mutations, syncing them to Supabase when online.
+// It stores local drafts and pending mutations, syncing them to Appwrite when online.
 
 const SYNC_QUEUE_KEY = 'saltedhash_sync_queue';
 
@@ -56,32 +56,25 @@ export class SyncQueue {
     if (pendingActions.length === 0) return;
 
     try {
-      const { supabase } = await import('./supabaseClient');
+      const { databaseService } = await import('@/services/databaseService');
 
       for (const action of pendingActions) {
-        let error = null;
+        let hasError = false;
 
         try {
           if (action.type === 'INSERT') {
-            const { error: err } = await supabase.from(action.table).insert(action.payload);
-            error = err;
+            await databaseService.createDocument(action.table, action.payload);
           } else if (action.type === 'UPDATE') {
-            const { error: err } = await supabase.from(action.table).update(action.payload).eq('id', action.payload.id);
-            error = err;
+            await databaseService.updateDocument(action.table, action.payload.id, action.payload);
           } else if (action.type === 'DELETE') {
-            const { error: err } = await supabase.from(action.table).delete().eq('id', action.payload.id);
-            error = err;
+            await databaseService.deleteDocument(action.table, action.payload.id);
           }
 
-          if (error) {
-            console.error(`Sync action failed: ${action.id}`, error);
-            action.status = 'failed';
-          } else {
-            action.status = 'completed';
-          }
+          action.status = 'completed';
         } catch (e) {
           console.error(`Exception in sync action: ${action.id}`, e);
           action.status = 'failed';
+          hasError = true;
         }
       }
 
@@ -90,7 +83,7 @@ export class SyncQueue {
       this.setQueue(remainingActions);
 
     } catch (e) {
-      console.error('Failed to import supabase client for sync', e);
+      console.error('Failed to import databaseService for sync', e);
     }
   }
 

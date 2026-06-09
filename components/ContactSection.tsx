@@ -10,9 +10,9 @@ export default function ContactSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-8">Let's Connect</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-8">Let&apos;s Connect</h2>
           <p className="text-gray-400 mb-8">
-            I'm always interested in hearing about new projects and opportunities.
+            I&apos;m always interested in hearing about new projects and opportunities.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <a
