@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import { Hexagon, Network, LayoutGrid, LayoutDashboard, UserCircle, LogIn, Menu, X, Image as ImageIcon } from "lucide-react";
 import { AppwritePing } from "@/components/AppwritePing";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.variable} ${mono.variable} font-sans bg-[#050505] text-gray-100 antialiased`}>
         <AppwritePing />
+        <Toaster position="bottom-right" />
         <nav className="fixed top-0 inset-x-0 z-50 glass-panel border-b border-neon-cyan/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
