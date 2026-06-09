@@ -50,4 +50,4 @@ export default function AboutClient() {
       </div>
     </section>
   );
-} 
+}
