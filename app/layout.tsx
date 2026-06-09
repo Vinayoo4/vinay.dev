@@ -2,14 +2,14 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
-import { Hexagon, Network, Brain, Briefcase, MessageSquare, Phone, Menu, X } from "lucide-react";
+import { Hexagon, Network, LayoutGrid, LayoutDashboard, UserCircle, LogIn, Menu, X, Image as ImageIcon } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "SaltedHash — AI-Powered Digital Solutions",
-  description: "AI/ML solutions, Python automation, SPA/PWA development, and SaaS builds by Vinay.",
+  title: "SaltedHash — Umbrella Platform",
+  description: "Centralized PWA shell, app launcher, and control center for the SALTEDHASH ecosystem.",
   manifest: "/manifest.json",
   themeColor: "#050505",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "SaltedHash" },
@@ -39,11 +39,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
               <div className="hidden md:flex items-center gap-6">
                 {[
-                  { icon: Network, label: "Dashboard", href: "/" },
-                  { icon: Brain, label: "Services", href: "/services" },
-                  { icon: Briefcase, label: "Portfolio", href: "/portfolio" },
-                  { icon: MessageSquare, label: "Chat", href: "/chat" },
-                  { icon: Phone, label: "Contact", href: "/contact" },
+                  { icon: Network, label: "Home", href: "/" },
+                  { icon: ImageIcon, label: "Gallery", href: "/gallery" },
+                  { icon: LayoutGrid, label: "Modules", href: "/modules" },
+                  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
                 ].map(({ icon: Icon, label, href }) => (
                   <Link
                     key={label}
@@ -54,6 +53,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <span>{label}</span>
                   </Link>
                 ))}
+              </div>
+
+              <div className="hidden md:flex items-center gap-4 border-l border-gray-800 pl-6 ml-2">
+                <Link
+                  href="/auth/login"
+                  className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-neon-cyan transition-colors group"
+                >
+                  <LogIn className="w-3.5 h-3.5 group-hover:animate-neon-pulse" />
+                  <span>Login</span>
+                </Link>
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-neon-cyan transition-colors group"
+                >
+                  <UserCircle className="w-4 h-4 group-hover:animate-neon-pulse" />
+                </Link>
               </div>
 
               <MobileMenu />
@@ -67,12 +82,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Hexagon className="w-4 h-4 text-neon-cyan" strokeWidth={1.5} />
-              <span>SaltedHash — Built with intelligence</span>
+              <span>SaltedHash Umbrella Platform</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-gray-600">
-              <span>© {new Date().getFullYear()} Vinay</span>
-              <span>AI-Powered</span>
-              <span>Local-First</span>
+              <span>© {new Date().getFullYear()} SaltedHash</span>
+              <span>Centralized OS</span>
             </div>
           </div>
         </footer>
@@ -91,11 +105,12 @@ function MobileMenu() {
         </summary>
         <div className="fixed top-16 inset-x-0 bottom-0 bg-[#050505]/95 backdrop-blur-xl border-t border-neon-cyan/20 p-6 flex flex-col gap-4">
           {[
-            { icon: Network, label: "Dashboard", href: "/" },
-            { icon: Brain, label: "Services", href: "/services" },
-            { icon: Briefcase, label: "Portfolio", href: "/portfolio" },
-            { icon: MessageSquare, label: "Chat", href: "/chat" },
-            { icon: Phone, label: "Contact", href: "/contact" },
+            { icon: Network, label: "Home", href: "/" },
+            { icon: ImageIcon, label: "Gallery", href: "/gallery" },
+            { icon: LayoutGrid, label: "Modules", href: "/modules" },
+            { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+            { icon: LogIn, label: "Login", href: "/auth/login" },
+            { icon: UserCircle, label: "Profile", href: "/profile" },
           ].map(({ icon: Icon, label, href }) => (
             <Link
               key={label}
