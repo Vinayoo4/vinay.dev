@@ -117,4 +117,4 @@ const CertificateSlider: React.FC<CertificateSliderProps> = ({ images = defaultI
   );
 };
 
-export default CertificateSlider; 
+export default CertificateSlider;
