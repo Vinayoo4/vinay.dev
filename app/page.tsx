@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Hexagon, LayoutGrid, Zap, Shield, ArrowRight, ChevronDown, Activity, Globe, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
+import { client } from "@/lib/appwrite";
 
 const stats = [
   { icon: LayoutGrid, value: "30+", label: "Modules Integrated" },
@@ -22,6 +23,9 @@ export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Ping the Appwrite backend server to verify the setup
+    client.ping().then(() => console.log('Appwrite setup verified successfully.')).catch(console.error);
+
     const handleMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
     };
