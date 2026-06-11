@@ -1,7 +1,7 @@
 import { databases } from '@/lib/appwrite';
 import { ID, Query } from 'appwrite';
 
-const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID || process.env.DATABASE_ID || '';
+const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || "saltedhash_db";
 
 export const databaseService = {
   async getDocument(collectionId: string, documentId: string) {

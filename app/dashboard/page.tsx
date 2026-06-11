@@ -65,11 +65,20 @@ export default function DashboardPage() {
         transition={{ delay: 0.4 }}
       >
         <h2 className="text-xl font-bold text-white font-mono mb-6">Recent Activity</h2>
-        <div className="p-8 rounded-xl glass-panel border border-gray-800 text-center text-gray-500 font-mono text-sm">
-          No recent activity across your linked modules.
-          <div className="mt-4">
-            <Link href="/modules" className="text-neon-cyan hover:underline">Browse Modules →</Link>
+        <div className="p-12 rounded-xl glass-panel border border-dashed border-gray-700 text-center flex flex-col items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center mb-6">
+            <Package className="w-8 h-8 text-gray-500" />
           </div>
+          <h3 className="text-lg font-bold text-white font-mono mb-2">No Modules Linked Yet</h3>
+          <p className="text-gray-500 font-mono text-sm mb-6 max-w-md">
+            Your centralized dashboard is currently empty. Connect SALTEDHASH modules from the app registry to monitor their activity here.
+          </p>
+          <Link
+            href="/modules"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/20 transition-all font-mono text-sm"
+          >
+            Browse Modules →
+          </Link>
         </div>
       </motion.div>
     </div>
