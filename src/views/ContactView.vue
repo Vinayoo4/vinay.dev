@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import OrderForm from '@/components/ui/OrderForm.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 import anime from 'animejs'
 
 const titleRef = ref()
 const textRef = ref()
 const formContainerRef = ref()
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
+  const targets = [titleRef.value, textRef.value, formContainerRef.value].filter(Boolean)
+  if (targets.length === 0) return
   anime({
-    targets: [titleRef.value, textRef.value, formContainerRef.value],
+    targets,
     translateY: [20, 0],
     opacity: [0, 1],
     duration: 800,

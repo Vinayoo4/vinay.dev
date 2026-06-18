@@ -16,7 +16,7 @@ const isOpen = ref(false)
         <router-link to="/contact" class="hover:text-foreground/70 transition-colors">Contact</router-link>
       </div>
 
-      <button @click="isOpen = !isOpen" class="md:hidden z-50 relative">
+      <button @click="isOpen = !isOpen" aria-label="Toggle navigation menu" class="md:hidden z-50 relative">
         <Menu v-if="!isOpen" class="w-6 h-6" />
         <X v-else class="w-6 h-6" />
       </button>

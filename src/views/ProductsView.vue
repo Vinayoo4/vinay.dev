@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import ProductGrid from '@/components/ui/ProductGrid.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 import anime from 'animejs'
 
 const titleRef = ref()
 const textRef = ref()
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
+  const targets = [titleRef.value, textRef.value].filter(Boolean)
+  if (targets.length === 0) return
   anime({
-    targets: [titleRef.value, textRef.value],
+    targets,
     translateY: [20, 0],
     opacity: [0, 1],
     duration: 800,
