@@ -31,8 +31,8 @@ onMounted(() => {
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div
-        v-for="(product, index) in products"
+      <div 
+        v-for="(product, index) in products" 
         :key="index"
         class="triu-element group border border-foreground/10 p-8 md:p-12 hover:border-naturals transition-colors duration-500 bg-background"
       >
