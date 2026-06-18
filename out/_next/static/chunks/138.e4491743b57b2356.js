@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[138],{4138:function(_,e,n){n.d(e,{supabase:function(){return A}});var E=n(4566),a=n(2601);let u=a.env.NEXT_PUBLIC_SUPABASE_URL||a.env.VITE_SUPABASE_URL||"https://zzfvnpakhuazlanakcyv.supabase.co",s=a.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||a.env.VITE_SUPABASE_ANON_KEY||"dummy",A=(0,E.eI)(u,s)}}]);
