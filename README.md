@@ -32,6 +32,6 @@ The output will be in the `dist/` directory.
 
 ### Important: Appwrite Sites Routing
 
-Because this is a Single Page Application (SPA) using Vue Router in `history` mode, **you must configure a rewrite rule** when deploying to Appwrite Sites (or any other static host).
+Because this is a Single Page Application (SPA) using Vue Router in `history` mode, **you must configure a rewrite rule** when deploying to Appwrite Sites (or any other static host). 
 
 You need to add a catch-all rewrite rule that points all unmatched routes to `index.html`. Without this, direct navigation to subpages (e.g., `/studio`) will result in a 404 error.

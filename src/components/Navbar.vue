@@ -8,7 +8,7 @@ const isOpen = ref(false)
   <nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-foreground/5">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <router-link to="/" class="font-serif text-xl tracking-tight font-bold z-50 relative">SALTEDHASH</router-link>
-
+      
       <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-medium">
         <router-link to="/studio" class="hover:text-tech transition-colors">Tech</router-link>
         <router-link to="/triu" class="hover:text-naturals transition-colors">Naturals</router-link>

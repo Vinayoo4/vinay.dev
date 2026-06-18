@@ -38,8 +38,8 @@ onMounted(() => {
     </div>
 
     <div class="border-t border-foreground/10">
-      <div
-        v-for="service in services"
+      <div 
+        v-for="service in services" 
         :key="service.id"
         class="studio-element border-b border-foreground/10 py-8 cursor-pointer group"
         @click="toggleService(service.id)"

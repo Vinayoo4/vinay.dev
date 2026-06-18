@@ -18,7 +18,7 @@ const errorMsg = ref('')
 const submitForm = async () => {
   isSubmitting.value = true
   errorMsg.value = ''
-
+  
   try {
     await databases.createDocument(
       DATABASE_ID,
@@ -71,19 +71,19 @@ onMounted(() => {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <label class="block text-xs font-mono uppercase tracking-widest mb-3">Name</label>
-          <input
-            v-model="form.name"
-            required
-            type="text"
+          <input 
+            v-model="form.name" 
+            required 
+            type="text" 
             class="w-full bg-transparent border-b border-foreground/20 py-3 focus:outline-none focus:border-foreground transition-colors"
           />
         </div>
         <div>
           <label class="block text-xs font-mono uppercase tracking-widest mb-3">Email</label>
-          <input
-            v-model="form.email"
-            required
-            type="email"
+          <input 
+            v-model="form.email" 
+            required 
+            type="email" 
             class="w-full bg-transparent border-b border-foreground/20 py-3 focus:outline-none focus:border-foreground transition-colors"
           />
         </div>
@@ -91,8 +91,8 @@ onMounted(() => {
 
       <div>
         <label class="block text-xs font-mono uppercase tracking-widest mb-3">Area of Interest</label>
-        <select
-          v-model="form.interest"
+        <select 
+          v-model="form.interest" 
           class="w-full bg-transparent border-b border-foreground/20 py-3 focus:outline-none focus:border-foreground transition-colors appearance-none"
         >
           <option value="Tech">Tech & AI/ML Services</option>
@@ -103,16 +103,16 @@ onMounted(() => {
 
       <div>
         <label class="block text-xs font-mono uppercase tracking-widest mb-3">Message</label>
-        <textarea
-          v-model="form.message"
-          required
-          rows="4"
+        <textarea 
+          v-model="form.message" 
+          required 
+          rows="4" 
           class="w-full bg-transparent border-b border-foreground/20 py-3 focus:outline-none focus:border-foreground transition-colors resize-none"
         ></textarea>
       </div>
 
-      <button
-        type="submit"
+      <button 
+        type="submit" 
         :disabled="isSubmitting"
         class="bg-foreground text-background px-8 py-4 text-sm uppercase tracking-widest hover:bg-foreground/90 transition-colors disabled:opacity-50 w-full md:w-auto"
       >
