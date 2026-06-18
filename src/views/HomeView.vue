@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import EntryScene from '@/components/scene/EntryScene.vue'
 import ProductGrid from '@/components/ui/ProductGrid.vue'
 import { useProductsStore } from '@/stores/products'
@@ -10,7 +10,7 @@ const show3D = ref(true)
 const titleRef = ref()
 const textRef = ref()
 
-onMounted(() => {
+onMounted(async () => {
   store.fetchProducts()
 
   // Graceful degradation for reduced motion or lack of WebGL
@@ -25,9 +25,12 @@ onMounted(() => {
   }
 
   // Animate text if in 2D fallback mode
-  if (!show3D.value && titleRef.value) {
+  if (!show3D.value) {
+    await nextTick()
+    const targets = [titleRef.value, textRef.value].filter(Boolean)
+    if (targets.length === 0) return
     anime({
-      targets: [titleRef.value, textRef.value],
+      targets,
       translateY: [20, 0],
       opacity: [0, 1],
       duration: 800,

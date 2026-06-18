@@ -1,43 +1,28 @@
 <script setup lang="ts">
 import { useTresContext } from '@tresjs/core'
-import { watch, onMounted, ref } from 'vue'
+import { watch } from 'vue'
 import anime from 'animejs'
 import type { PerspectiveCamera } from 'three'
 
-const { camera } = useTresContext()
-const animationComplete = ref(false)
+const { camera: tresCamera } = useTresContext()
 
-onMounted(() => {
-  // Use unref or check if camera is a ref, or access it directly
-  const cam = (camera && 'value' in camera ? camera.value : camera) as PerspectiveCamera | undefined
-  if (!cam) return
+watch(tresCamera, (cam) => {
+  const pcam = cam as unknown as PerspectiveCamera | null
+  if (!pcam?.position) return
 
-  // Initial camera position
-  cam.position.set(0, 0, 5)
-  cam.lookAt(0, 0, -35)
+  pcam.position.set(0, 0, 5)
+  pcam.lookAt(0, 0, -35)
 
-  // Dolly animation moving forward through the dark corridor
   anime({
-    targets: cam.position,
-    z: -35, // Move deep into the corridor
+    targets: pcam.position,
+    z: -35,
     duration: 4000,
     easing: 'easeOutCubic',
-    complete: () => {
-      animationComplete.value = true
+    update: () => {
+      pcam.lookAt(0, 0, -40)
     }
   })
-})
-
-// Ensure camera always looks forward during animation
-watch(() => {
-    const cam = (camera && 'value' in camera ? camera.value : camera) as PerspectiveCamera | undefined
-    return cam?.position.z
-}, () => {
-  const cam = (camera && 'value' in camera ? camera.value : camera) as PerspectiveCamera | undefined
-  if (cam && !animationComplete.value) {
-    cam.lookAt(0, 0, -40)
-  }
-})
+}, { immediate: true })
 </script>
 
 <template>

@@ -24,7 +24,7 @@ const toggleMenu = () => {
           <RouterLink to="/contact" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">Contact</RouterLink>
         </div>
         <div class="flex items-center sm:hidden">
-          <button @click="toggleMenu" class="text-neutral-600 hover:text-neutral-900 focus:outline-none">
+          <button @click="toggleMenu" aria-label="Toggle navigation menu" class="text-neutral-600 hover:text-neutral-900 focus:outline-none">
             <Menu v-if="!isMobileMenuOpen" class="w-6 h-6" />
             <X v-else class="w-6 h-6" />
           </button>

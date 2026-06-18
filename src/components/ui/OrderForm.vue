@@ -60,6 +60,7 @@ const handleSubmit = async () => {
             id="name"
             v-model="formData.name"
             required
+            autocomplete="name"
             class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
           />
         </div>
@@ -70,6 +71,7 @@ const handleSubmit = async () => {
             id="phone"
             v-model="formData.phone"
             required
+            autocomplete="tel"
             class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
           />
         </div>
@@ -81,6 +83,7 @@ const handleSubmit = async () => {
           type="email"
           id="email"
           v-model="formData.email"
+          autocomplete="email"
           class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
         />
       </div>
@@ -101,6 +104,7 @@ const handleSubmit = async () => {
           id="message"
           v-model="formData.message"
           rows="4"
+          autocomplete="off"
           class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors resize-none"
         ></textarea>
       </div>
