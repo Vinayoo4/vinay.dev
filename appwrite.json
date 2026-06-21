@@ -1,0 +1,70 @@
+{
+  "projectId": "your_project_id_here",
+  "projectName": "saltedhash",
+  "databases": [
+    {
+      "$id": "saltedhash_public",
+      "name": "SALTEDHASH Public",
+      "collections": [
+        {
+          "$id": "products",
+          "name": "Products",
+          "$permissions": [
+            "read(\"any\")"
+          ],
+          "documentSecurity": false,
+          "attributes": [
+            { "key": "name", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 255, "default": null },
+            { "key": "slug", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 255, "default": null },
+            { "key": "description", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 2048, "default": null },
+            { "key": "price", "type": "double", "status": "available", "error": "", "required": true, "array": false, "default": null },
+            { "key": "brand_code", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 50, "default": null },
+            { "key": "status", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 20, "default": "active" },
+            { "key": "imageFileId", "type": "string", "status": "available", "error": "", "required": false, "array": false, "size": 255, "default": null },
+            { "key": "category", "type": "string", "status": "available", "error": "", "required": false, "array": false, "size": 100, "default": null },
+            { "key": "tags", "type": "string", "status": "available", "error": "", "required": false, "array": true, "size": 100, "default": null }
+          ],
+          "indexes": []
+        },
+        {
+          "$id": "contact_leads",
+          "name": "Contact Leads",
+          "$permissions": [
+            "create(\"any\")"
+          ],
+          "documentSecurity": false,
+          "attributes": [
+            { "key": "name", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 255, "default": null },
+            { "key": "email", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 255, "default": null },
+            { "key": "phone", "type": "string", "status": "available", "error": "", "required": false, "array": false, "size": 50, "default": null },
+            { "key": "message", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 2048, "default": null },
+            { "key": "source", "type": "string", "status": "available", "error": "", "required": true, "array": false, "size": 100, "default": "website" }
+          ],
+          "indexes": []
+        }
+      ]
+    }
+  ],
+  "buckets": [
+    {
+      "$id": "product_assets",
+      "name": "Product Assets",
+      "$permissions": [
+        "read(\"any\")"
+      ],
+      "fileSecurity": false,
+      "enabled": true,
+      "maximumFileSize": 10485760,
+      "allowedFileExtensions": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+        "avif"
+      ],
+      "compression": "none",
+      "encryption": true,
+      "antivirus": true
+    }
+  ]
+}

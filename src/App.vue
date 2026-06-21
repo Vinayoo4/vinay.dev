@@ -1,13 +1,36 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, provide } from 'vue'
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/ui/NavBar.vue'
 import ProductPanel from '@/components/ui/ProductPanel.vue'
+import InstallPrompt from '@/components/pwa/InstallPrompt.vue'
+import UpdateBanner from '@/components/pwa/UpdateBanner.vue'
+
+const isOnline = ref(navigator.onLine)
+
+const updateOnlineStatus = () => {
+  isOnline.value = navigator.onLine
+}
+
+onMounted(() => {
+  window.addEventListener('online', updateOnlineStatus)
+  window.addEventListener('offline', updateOnlineStatus)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('online', updateOnlineStatus)
+  window.removeEventListener('offline', updateOnlineStatus)
+})
+
+provide('isOnline', isOnline)
 </script>
 
 <template>
-  <NavBar />
+  <UpdateBanner />
+  <NavBar :is-online="isOnline" />
   <RouterView />
   <ProductPanel />
+  <InstallPrompt />
 </template>
 
 <style>

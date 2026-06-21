@@ -1,3 +1,4 @@
+import { logger } from '@/utils/logger'
 import { ref } from 'vue'
 import { Query } from 'appwrite'
 import { useAppwrite } from './useAppwrite'
@@ -30,7 +31,7 @@ export function useProducts() {
       products.value = response.documents as unknown as Product[]
     } catch (err: any) {
       error.value = err.message || 'Failed to fetch products'
-      console.error('Error fetching products:', err)
+      logger.error('Error fetching products:', err)
     } finally {
       loading.value = false
     }
