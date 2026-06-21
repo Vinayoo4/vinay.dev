@@ -51,5 +51,14 @@ onMounted(() => {
         </div>
       </router-link>
     </section>
+
+    <section class="mt-32 hero-text">
+      <div class="bg-neutral-900 text-white w-full py-16 px-8 flex flex-col items-center justify-center text-center">
+        <h3 class="text-3xl md:text-5xl mb-6 font-serif">A problem-first product lab.</h3>
+        <router-link to="/studio" class="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium hover:text-neutral-300 transition-colors">
+          Work with us <ArrowRight class="w-4 h-4" />
+        </router-link>
+      </div>
+    </section>
   </div>
 </template>

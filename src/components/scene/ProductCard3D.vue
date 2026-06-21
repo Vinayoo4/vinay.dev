@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { logger } from '@/utils/logger'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useTresContext } from '@tresjs/core'
 import { TextureLoader, DoubleSide, Color } from 'three'
@@ -29,7 +30,7 @@ onMounted(async () => {
         materialRef.value.needsUpdate = true
       }
     } catch (e) {
-      console.error('Error loading texture', e)
+      logger.error('Error loading texture', e)
     }
   }
 

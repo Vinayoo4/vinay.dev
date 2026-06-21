@@ -1,3 +1,4 @@
+import { logger } from '@/utils/logger'
 import { ref } from 'vue'
 import { ID } from 'appwrite'
 import { useAppwrite } from './useAppwrite'
@@ -33,7 +34,7 @@ export function useLeads() {
       success.value = true
     } catch (err: any) {
       error.value = err.message || 'Failed to submit lead'
-      console.error('Error submitting lead:', err)
+      logger.error('Error submitting lead:', err)
     } finally {
       loading.value = false
     }
