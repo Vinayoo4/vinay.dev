@@ -31,8 +31,9 @@ const displayProducts = computed(() => {
   // Take one product per category to display as the main billboard
   const categories = new Set()
   return store.products.filter(p => {
-    if (!categories.has(p.category)) {
-      categories.add(p.category)
+    const category = p.category || 'uncategorized'
+    if (!categories.has(category)) {
+      categories.add(category)
       return true
     }
     return false
@@ -71,7 +72,7 @@ const getPosition = (category: string): [number, number, number] => {
         v-for="product in displayProducts"
         :key="product.$id"
         :product="product"
-        :position="getPosition(product.category)"
+        :position="getPosition(product.category || 'uncategorized')"
       />
     </TresCanvas>
   </div>

@@ -20,10 +20,10 @@ const { camera } = useTresContext()
 let animationFrameId: number | null = null
 
 onMounted(async () => {
-  if (props.product.imageId) {
+  if (props.product.imageFileId) {
     const textureLoader = new TextureLoader()
     try {
-      const textureUrl = store.getImageUrl(props.product.imageId)
+      const textureUrl = store.getImageUrl(props.product.imageFileId)
       const texture = await textureLoader.loadAsync(textureUrl)
       if (materialRef.value) {
         materialRef.value.map = texture

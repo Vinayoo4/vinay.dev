@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import NavBar from '@/components/ui/NavBar.vue'
 import ProductPanel from '@/components/ui/ProductPanel.vue'
 import InstallPrompt from '@/components/pwa/InstallPrompt.vue'
+import Footer from '@/components/Footer.vue'
 import UpdateBanner from '@/components/pwa/UpdateBanner.vue'
 
 const isOnline = ref(navigator.onLine)
@@ -29,6 +30,7 @@ provide('isOnline', isOnline)
   <UpdateBanner />
   <NavBar :is-online="isOnline" />
   <RouterView />
+  <Footer />
   <ProductPanel />
   <InstallPrompt />
 </template>

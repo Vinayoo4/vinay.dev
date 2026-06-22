@@ -30,8 +30,8 @@ onMounted(() => {
       >
         <div class="aspect-w-4 aspect-h-3 bg-neutral-100 overflow-hidden relative">
           <img
-            v-if="product.imageId"
-            :src="store.getImageUrl(product.imageId)"
+            v-if="product.imageFileId"
+            :src="store.getImageUrl(product.imageFileId)"
             :alt="product.name"
             class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
           />
@@ -48,7 +48,7 @@ onMounted(() => {
             <p class="text-neutral-600 text-sm line-clamp-2">{{ product.description }}</p>
           </div>
           <div class="mt-4 flex items-center justify-between">
-            <span v-if="product.price" class="font-medium text-neutral-900">${{ product.price.toFixed(2) }}</span>
+            <span v-if="product.price" class="font-medium text-neutral-900">₹{{ product.price.toFixed(2) }}</span>
             <span class="text-xs font-medium text-neutral-500 group-hover:text-neutral-900 transition-colors uppercase tracking-wider">Details &rarr;</span>
           </div>
         </div>

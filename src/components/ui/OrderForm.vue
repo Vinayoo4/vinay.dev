@@ -14,6 +14,50 @@ const formData = ref({
   message: ''
 })
 
+const fieldErrors = ref({
+  name: '',
+  phone: '',
+  email: '',
+  message: ''
+})
+
+const validateField = (field: keyof typeof fieldErrors.value) => {
+  fieldErrors.value[field] = ''
+
+  if (field === 'name') {
+    if (!formData.value.name.trim()) {
+      fieldErrors.value.name = 'Name is required'
+    } else if (formData.value.name.trim().length < 2) {
+      fieldErrors.value.name = 'Name must be at least 2 characters'
+    }
+  } else if (field === 'phone') {
+    const phoneRegex = /^[+\d\s\-()]{7,15}$/
+    if (!formData.value.phone.trim()) {
+      fieldErrors.value.phone = 'Phone is required'
+    } else if (!phoneRegex.test(formData.value.phone.trim())) {
+      fieldErrors.value.phone = 'Invalid phone number format'
+    }
+  } else if (field === 'email') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (formData.value.email.trim() && !emailRegex.test(formData.value.email.trim())) {
+      fieldErrors.value.email = 'Invalid email format'
+    }
+  } else if (field === 'message') {
+    if (formData.value.message && formData.value.message.length > 1000) {
+      fieldErrors.value.message = 'Message must be less than 1000 characters'
+    }
+  }
+}
+
+const validate = () => {
+  validateField('name')
+  validateField('phone')
+  validateField('email')
+  validateField('message')
+
+  return !fieldErrors.value.name && !fieldErrors.value.phone && !fieldErrors.value.email && !fieldErrors.value.message
+}
+
 onMounted(() => {
   if (route.query.interest) {
     formData.value.productInterest = route.query.interest as string
@@ -21,6 +65,10 @@ onMounted(() => {
 })
 
 const handleSubmit = async () => {
+  if (!validate()) {
+    return
+  }
+
   await submitLead(formData.value)
   if (success.value) {
     formData.value = {
@@ -61,8 +109,10 @@ const handleSubmit = async () => {
             v-model="formData.name"
             required
             autocomplete="name"
+            @blur="validateField('name')"
             class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
           />
+          <p v-if="fieldErrors.name" class="text-red-500 text-xs mt-1">{{ fieldErrors.name }}</p>
         </div>
         <div>
           <label for="phone" class="block text-sm font-medium text-neutral-900 mb-2">Phone *</label>
@@ -72,8 +122,10 @@ const handleSubmit = async () => {
             v-model="formData.phone"
             required
             autocomplete="tel"
+            @blur="validateField('phone')"
             class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
           />
+          <p v-if="fieldErrors.phone" class="text-red-500 text-xs mt-1">{{ fieldErrors.phone }}</p>
         </div>
       </div>
 
@@ -84,8 +136,10 @@ const handleSubmit = async () => {
           id="email"
           v-model="formData.email"
           autocomplete="email"
+          @blur="validateField('email')"
           class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors"
         />
+        <p v-if="fieldErrors.email" class="text-red-500 text-xs mt-1">{{ fieldErrors.email }}</p>
       </div>
 
       <div>
@@ -105,8 +159,14 @@ const handleSubmit = async () => {
           v-model="formData.message"
           rows="4"
           autocomplete="off"
+          @blur="validateField('message')"
           class="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 focus:border-neutral-900 focus:ring-0 transition-colors resize-none"
         ></textarea>
+        <div class="flex justify-between items-center mt-1">
+          <p v-if="fieldErrors.message" class="text-red-500 text-xs">{{ fieldErrors.message }}</p>
+          <p v-else class="text-xs"></p>
+          <p class="text-xs text-neutral-400">{{ formData.message.length }}/1000</p>
+        </div>
       </div>
 
       <button
