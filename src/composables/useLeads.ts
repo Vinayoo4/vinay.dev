@@ -27,8 +27,7 @@ export function useLeads() {
         leadsCollectionId,
         ID.unique(),
         {
-          ...leadData,
-          createdAt: new Date().toISOString()
+          ...leadData
         }
       )
       success.value = true

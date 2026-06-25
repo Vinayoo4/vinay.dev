@@ -6,12 +6,14 @@ import { useAppwrite } from './useAppwrite'
 export interface Product {
   $id: string;
   name: string;
-  category: 'stationery' | 'natural' | 'educational' | 'gardening' | 'digital';
-  description?: string;
-  price?: number;
-  imageId?: string;
-  available: boolean;
-  order?: number;
+  slug: string;
+  description: string;
+  price: number;
+  brand_code: string;
+  status: string;
+  imageFileId?: string;
+  category?: string;
+  tags?: string[];
 }
 
 export function useProducts() {
@@ -25,8 +27,7 @@ export function useProducts() {
     error.value = null
     try {
       const response = await databases.listDocuments(databaseId, productsCollectionId, [
-        Query.equal('available', true),
-        Query.orderAsc('order')
+        Query.equal('status', 'active')
       ])
       products.value = response.documents as unknown as Product[]
     } catch (err: any) {
@@ -37,9 +38,9 @@ export function useProducts() {
     }
   }
 
-  const getImageUrl = (imageId: string) => {
-    if (!imageId) return ''
-    return storage.getFileView(bucketId, imageId).toString()
+  const getImageUrl = (imageFileId: string) => {
+    if (!imageFileId) return ''
+    return storage.getFileView(bucketId, imageFileId).toString()
   }
 
   return {

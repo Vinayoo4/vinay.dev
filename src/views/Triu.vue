@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import anime from 'animejs'
+import { useProductsStore } from '@/stores/products'
 
-const products = [
-  { name: 'Neem Powder', desc: 'Antibacterial purification for skin and soil.', tag: 'Purify' },
-  { name: 'Rose Petal Powder', desc: 'Cooling essence for rituals and natural skincare.', tag: 'Soothe' },
-  { name: 'Cow Dung Cakes', desc: 'Traditional utility for authentic cultural practices.', tag: 'Heritage' }
-]
+const store = useProductsStore()
 
 onMounted(() => {
+  store.fetchProducts()
+
   anime({
     targets: '.triu-element',
     translateY: [30, 0],
@@ -24,21 +23,58 @@ onMounted(() => {
   <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
     <div class="max-w-3xl mb-24">
       <div class="triu-element text-xs font-mono uppercase tracking-widest text-naturals mb-8">TRIU Naturals</div>
-      <h1 class="triu-element text-5xl md:text-7xl mb-8">Rooted in<br/>tradition.</h1>
+      <h1 class="triu-element text-5xl md:text-7xl mb-8 font-serif">Rooted in<br/>tradition.</h1>
       <p class="triu-element text-lg md:text-xl text-foreground/70 font-light leading-relaxed">
         Chemical-free care returning to the essentials. We curate natural products that respect both heritage and biological utility.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div 
-        v-for="(product, index) in products" 
-        :key="index"
-        class="triu-element group border border-foreground/10 p-8 md:p-12 hover:border-naturals transition-colors duration-500 bg-background"
+        v-for="i in 3"
+        :key="i"
+        class="triu-element border border-foreground/10 p-8 md:p-12 bg-background"
       >
-        <div class="text-xs font-mono uppercase tracking-widest text-naturals mb-12">{{ product.tag }}</div>
-        <h3 class="text-3xl mb-4">{{ product.name }}</h3>
-        <p class="text-foreground/70">{{ product.desc }}</p>
+        <div class="w-24 h-4 bg-neutral-100 animate-pulse mb-12"></div>
+        <div class="w-full aspect-square bg-neutral-100 animate-pulse mb-8"></div>
+        <div class="w-3/4 h-8 bg-neutral-100 animate-pulse mb-4"></div>
+        <div class="w-1/2 h-6 bg-neutral-100 animate-pulse mb-4"></div>
+        <div class="w-full h-16 bg-neutral-100 animate-pulse"></div>
+      </div>
+    </div>
+
+    <div v-else-if="store.error" class="text-center py-24 triu-element">
+      <p class="text-foreground mb-4">Could not load products. Please try again.</p>
+      <button
+        @click="store.fetchProducts()"
+        class="bg-foreground text-background px-6 py-2 uppercase tracking-widest text-sm hover:bg-foreground/80 transition-colors"
+      >
+        Retry
+      </button>
+    </div>
+
+    <div v-else-if="store.products.length === 0" class="text-center py-24 triu-element">
+      <p class="text-foreground text-lg">Catalog coming soon.</p>
+    </div>
+
+    <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div
+        v-for="product in store.products"
+        :key="product.$id"
+        @click="store.openProductPanel(product)"
+        class="triu-element group border border-foreground/10 p-8 md:p-12 hover:border-naturals transition-colors duration-500 bg-background cursor-pointer"
+      >
+        <div class="text-xs font-mono uppercase tracking-widest text-naturals mb-12">{{ product.category }}</div>
+        <div v-if="product.imageFileId" class="w-full aspect-square bg-neutral-100 border border-neutral-200 overflow-hidden mb-8">
+          <img
+            :src="store.getImageUrl(product.imageFileId)"
+            :alt="product.name"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+        </div>
+        <h3 class="text-3xl mb-2 font-serif">{{ product.name }}</h3>
+        <div v-if="product.price" class="text-xl mb-4 font-medium text-foreground">₹{{ product.price.toFixed(2) }}</div>
+        <p class="text-foreground/70">{{ product.description }}</p>
       </div>
     </div>
   </div>

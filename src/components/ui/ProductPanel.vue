@@ -55,6 +55,9 @@ watch(() => store.isPanelOpen, (isOpen) => {
       <div
         v-if="store.isPanelOpen && store.selectedProduct"
         class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAFAFA] shadow-2xl z-[70] border-l border-neutral-200 overflow-y-auto flex flex-col"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="'panel-title-' + store.selectedProduct.$id"
       >
         <div class="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#FAFAFA]/90 backdrop-blur-md border-b border-neutral-200">
           <span class="text-xs font-medium tracking-widest uppercase text-neutral-500">{{ store.selectedProduct.category }}</span>
@@ -67,18 +70,18 @@ watch(() => store.isPanelOpen, (isOpen) => {
         </div>
 
         <div class="flex-grow p-6 flex flex-col gap-8">
-          <div v-if="store.selectedProduct.imageId" class="w-full aspect-square bg-neutral-100 border border-neutral-200 overflow-hidden">
+          <div v-if="store.selectedProduct.imageFileId" class="w-full aspect-square bg-neutral-100 border border-neutral-200 overflow-hidden">
              <img
-              :src="store.getImageUrl(store.selectedProduct.imageId)"
+              :src="store.getImageUrl(store.selectedProduct.imageFileId)"
               :alt="store.selectedProduct.name"
               class="w-full h-full object-cover"
             />
           </div>
 
           <div>
-            <h2 class="font-serif text-3xl font-medium text-neutral-900 mb-4 leading-tight">{{ store.selectedProduct.name }}</h2>
+            <h2 :id="'panel-title-' + store.selectedProduct.$id" class="font-serif text-3xl font-medium text-neutral-900 mb-4 leading-tight">{{ store.selectedProduct.name }}</h2>
             <p v-if="store.selectedProduct.price" class="text-xl font-medium text-neutral-900 mb-6">
-              ${{ store.selectedProduct.price.toFixed(2) }}
+              ₹{{ store.selectedProduct.price.toFixed(2) }}
             </p>
             <div class="prose prose-neutral prose-sm max-w-none text-neutral-600">
               <p>{{ store.selectedProduct.description }}</p>
