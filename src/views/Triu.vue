@@ -20,11 +20,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-24">
+  <div class="px-6 py-12 md:py-32 max-w-7xl mx-auto min-h-screen">
+    <div class="max-w-4xl mb-32">
       <div class="triu-element text-xs font-mono uppercase tracking-widest text-naturals mb-8">TRIU Naturals</div>
-      <h1 class="triu-element text-5xl md:text-7xl mb-8 font-serif">Rooted in<br/>tradition.</h1>
-      <p class="triu-element text-lg md:text-xl text-foreground/70 font-light leading-relaxed">
+      <h1 class="triu-element text-5xl md:text-8xl mb-8 font-serif">Rooted in<br/>tradition.</h1>
+      <p class="triu-element text-xl md:text-2xl text-foreground/70 font-light leading-relaxed max-w-2xl">
         Chemical-free care returning to the essentials. We curate natural products that respect both heritage and biological utility.
       </p>
     </div>

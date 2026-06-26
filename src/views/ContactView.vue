@@ -23,10 +23,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#FAFAFA] pt-24 pb-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-      <h1 ref="titleRef" class="font-serif text-4xl md:text-5xl font-medium text-neutral-900 mb-4 opacity-0">Get in Touch</h1>
-      <p ref="textRef" class="text-neutral-600 max-w-2xl mx-auto opacity-0">Inquire about our products or services using the form below.</p>
+  <div class="min-h-screen bg-[#FAFAFA] pt-32 pb-24 flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
+      <h1 ref="titleRef" class="font-serif text-5xl md:text-7xl font-medium text-neutral-900 mb-6 opacity-0">Get in Touch.</h1>
+      <p ref="textRef" class="text-xl text-neutral-600 max-w-2xl mx-auto opacity-0 font-light">Inquire about our venture studio services or TRIU Naturals using the form below.</p>
     </div>
     <div ref="formContainerRef" class="opacity-0">
       <OrderForm />

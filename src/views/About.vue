@@ -15,12 +15,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
-      <div>
+  <div class="px-6 py-12 md:py-32 max-w-7xl mx-auto min-h-screen flex items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 w-full">
+      <div class="flex flex-col justify-center">
         <div class="about-element text-xs font-mono uppercase tracking-widest text-foreground/50 mb-8">The Studio</div>
-        <h1 class="about-element text-5xl md:text-6xl mb-8">Structure &<br/>Substance.</h1>
-        <p class="about-element text-lg text-foreground/70 font-light leading-relaxed mb-6">
+        <h1 class="about-element text-5xl md:text-8xl mb-8 font-serif">Structure &<br/>Substance.</h1>
+        <p class="about-element text-xl text-foreground/70 font-light leading-relaxed mb-6">
           SALTEDHASH operates as an umbrella brand, synthesizing logic with nature. We believe the same principles that govern a robust software architecture can be applied to creating sustainable natural products.
         </p>
         <p class="about-element text-lg text-foreground/70 font-light leading-relaxed">
