@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { X } from 'lucide-vue-next'
+import { X } from '@lucide/vue'
 import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 

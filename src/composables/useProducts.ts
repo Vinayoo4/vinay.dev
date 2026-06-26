@@ -22,17 +22,58 @@ export function useProducts() {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
+  const fallbackProducts: Product[] = [
+    {
+      $id: 'fallback-1',
+      name: 'Neem & Basil Soap',
+      slug: 'neem-basil-soap',
+      description: 'Cold-pressed natural soap infused with neem and holy basil. Cleanses deeply while preserving natural oils.',
+      price: 350.00,
+      brand_code: 'TRIU',
+      status: 'active',
+      category: 'natural'
+    },
+    {
+      $id: 'fallback-2',
+      name: 'Rose Water Toner',
+      slug: 'rose-water-toner',
+      description: 'Pure distilled rose water. Balances pH and hydrates the skin without any synthetic additives.',
+      price: 450.00,
+      brand_code: 'TRIU',
+      status: 'active',
+      category: 'natural'
+    },
+    {
+      $id: 'fallback-3',
+      name: 'Herbal Hair Oil',
+      slug: 'herbal-hair-oil',
+      description: 'Traditional blend of amla, bhringraj, and coconut oil for scalp nourishment.',
+      price: 650.00,
+      brand_code: 'TRIU',
+      status: 'active',
+      category: 'natural'
+    }
+  ]
+
   const fetchProducts = async () => {
     loading.value = true
     error.value = null
+
+    if (!databaseId || !productsCollectionId) {
+      logger.warn('Missing Appwrite configuration. Using fallback product data.')
+      products.value = fallbackProducts
+      loading.value = false
+      return
+    }
+
     try {
       const response = await databases.listDocuments(databaseId, productsCollectionId, [
         Query.equal('status', 'active')
       ])
       products.value = response.documents as unknown as Product[]
     } catch (err: any) {
-      error.value = err.message || 'Failed to fetch products'
-      logger.error('Error fetching products:', err)
+      logger.error('Error fetching products, using fallback:', err)
+      products.value = fallbackProducts
     } finally {
       loading.value = false
     }

@@ -1,9 +1,28 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import anime from 'animejs'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight } from '@lucide/vue'
+import EntryScene from '@/components/scene/EntryScene.vue'
+
+const isReducedMotion = ref(false)
+const isWebGLAvailable = ref(true)
+
+// Check WebGL availability
+const checkWebGL = () => {
+  try {
+    const canvas = document.createElement('canvas')
+    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
+  } catch (e) {
+    return false
+  }
+}
+
+const show3D = computed(() => !isReducedMotion.value && isWebGLAvailable.value)
 
 onMounted(() => {
+  isReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  isWebGLAvailable.value = checkWebGL()
+
   anime({
     targets: '.hero-text',
     translateY: [50, 0],
@@ -16,15 +35,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
-    <section class="min-h-[60vh] flex flex-col justify-center mb-32">
-      <h1 class="hero-text text-5xl md:text-8xl lg:text-[10rem] leading-none tracking-tighter mb-8 max-w-5xl">
-        The system builds itself.
-      </h1>
-      <p class="hero-text text-lg md:text-2xl text-foreground/70 max-w-2xl font-light leading-relaxed">
-        SALTEDHASH is a venture studio and brand umbrella. We build intelligent software systems and curate natural essentials, guided by the principle of elegant utility.
-      </p>
+  <div class="w-full">
+    <!-- 3D Entry Scene / Hero -->
+    <section class="relative w-full h-[80vh] min-h-[600px] bg-black overflow-hidden flex flex-col">
+      <div v-if="show3D" class="absolute inset-0 z-0">
+        <Suspense>
+          <EntryScene />
+        </Suspense>
+      </div>
+
+      <!-- Overlay text for 3D, or fallback flat hero -->
+      <div class="relative z-10 flex-grow flex flex-col justify-center px-6 max-w-7xl mx-auto w-full pointer-events-none">
+        <h1 class="hero-text text-5xl md:text-8xl lg:text-[10rem] leading-none tracking-tighter mb-8 max-w-5xl text-white">
+          The system builds itself.
+        </h1>
+        <p class="hero-text text-lg md:text-2xl text-white/70 max-w-2xl font-light leading-relaxed">
+          SALTEDHASH is a venture studio and brand umbrella. We build intelligent software systems and curate natural essentials, guided by the principle of elegant utility.
+        </p>
+      </div>
+
+      <!-- Overlay gradient to blend with the rest of the page -->
+      <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none"></div>
     </section>
+
+    <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
 
     <section class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
       <router-link to="/studio" class="hero-text group relative overflow-hidden bg-background border border-foreground/10 p-8 md:p-12 hover:border-tech transition-colors duration-500 min-h-[400px] flex flex-col justify-between">
@@ -60,5 +94,6 @@ onMounted(() => {
         </router-link>
       </div>
     </section>
+    </div>
   </div>
 </template>

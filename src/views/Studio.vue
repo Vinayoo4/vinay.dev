@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import anime from 'animejs'
-import { Plus, Minus } from 'lucide-vue-next'
+import { Plus, Minus } from '@lucide/vue'
 
 const services = [
   { id: 1, title: 'AI & Machine Learning', desc: 'Custom intelligence models and automation workflows tailored to your specific business logic.' },
@@ -28,11 +28,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="px-6 py-12 md:py-24 max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-24">
+  <div class="px-6 py-12 md:py-32 max-w-7xl mx-auto min-h-screen">
+    <div class="max-w-4xl mb-32">
       <div class="studio-element text-xs font-mono uppercase tracking-widest text-tech mb-8">Studio & Agency</div>
-      <h1 class="studio-element text-5xl md:text-7xl mb-8">Engineering<br/>the future.</h1>
-      <p class="studio-element text-lg md:text-xl text-foreground/70 font-light leading-relaxed">
+      <h1 class="studio-element text-5xl md:text-8xl mb-8 font-serif">Engineering<br/>the future.</h1>
+      <p class="studio-element text-xl md:text-2xl text-foreground/70 font-light leading-relaxed max-w-2xl">
         We specialize in building robust software solutions and deploying intelligent systems. Our approach is logic-first, delivering precision without the fluff.
       </p>
     </div>
