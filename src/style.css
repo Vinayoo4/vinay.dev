@@ -5,6 +5,7 @@
   --color-foreground: #111827;
   --color-tech: #233CB5;
   --color-naturals: #2F4F2F;
+  --color-marketing: #B45309;
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -41,6 +42,9 @@ h1, h2, h3, h4, h5, h6 {
 .border-naturals { border-color: var(--color-naturals); }
 .text-foreground { color: var(--color-foreground); }
 .bg-background { background-color: var(--color-background); }
+.text-marketing { color: var(--color-marketing); }
+.bg-marketing { background-color: var(--color-marketing); }
+.border-marketing { border-color: var(--color-marketing); }
 
 /* Nav offset */
 .pt-16 { padding-top: 4rem; }

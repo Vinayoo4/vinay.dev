@@ -14,6 +14,9 @@ export interface Product {
   imageFileId?: string;
   category?: string;
   tags?: string[];
+  flipkartUrl?: string;
+  meeshoUrl?: string;
+  whatsappText?: string;
 }
 
 export function useProducts() {
@@ -31,7 +34,8 @@ export function useProducts() {
       price: 350.00,
       brand_code: 'TRIU',
       status: 'active',
-      category: 'natural'
+      category: 'natural',
+      flipkartUrl: 'https://www.flipkart.com'
     },
     {
       $id: 'fallback-2',
@@ -41,7 +45,8 @@ export function useProducts() {
       price: 450.00,
       brand_code: 'TRIU',
       status: 'active',
-      category: 'natural'
+      category: 'natural',
+      meeshoUrl: 'https://www.meesho.com'
     },
     {
       $id: 'fallback-3',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import anime from 'animejs'
-import { Plus, Minus, Code2, Brain, TrendingUp, Smartphone, Shield, Zap } from 'lucide-vue-next'
+import { Plus, Minus, Code2, Brain, TrendingUp, Smartphone, Shield, Zap, Check, Clock } from 'lucide-vue-next'
 
 const services = [
   {
@@ -10,7 +10,14 @@ const services = [
     title: 'AI & Machine Learning',
     tag: '01',
     desc: 'Custom intelligence models, NLP pipelines, and automation workflows tailored to your specific business logic. From data strategy to deployed inference endpoints.',
-    deliverables: ['Custom ML Models', 'Data Pipelines', 'AI Automation', 'Model Deployment']
+    deliverables: ['Custom ML Models', 'Data Pipelines', 'AI Automation', 'Model Deployment'],
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'Pandas', 'Scikit-learn', 'OpenAI API', 'LangChain'],
+    benefits: [
+      'Automate repetitive tasks to reduce operational costs by up to 60%.',
+      'Make data-backed decisions with custom dashboards and predictive models.',
+      'Deploy chatbots and document processors that work 24/7 without breaks.'
+    ],
+    engagementInfo: '4\u201310 weeks \u00b7 Fixed scope or retainer \u00b7 Starting \u20B925,000'
   },
   {
     id: 2,
@@ -18,7 +25,14 @@ const services = [
     title: 'Web Architecture & Dev',
     tag: '02',
     desc: 'Scalable, performant, and secure full-stack applications. We architect PWAs, SPAs, and headless systems built on modern, maintainable infrastructure.',
-    deliverables: ['PWA / SPA Build', 'API Design', 'Performance Audit', 'Cloud Deploy']
+    deliverables: ['PWA / SPA Build', 'API Design', 'Performance Audit', 'Cloud Deploy'],
+    techStack: ['Vue 3', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Redis', 'Vercel', 'Docker'],
+    benefits: [
+      'Deliver a fast, reliable web experience that converts visitors into customers.',
+      'Scale effortlessly from hundreds to millions of users without rewrites.',
+      'Reduce maintenance overhead with clean, well-documented architecture.'
+    ],
+    engagementInfo: '3\u20138 weeks \u00b7 Fixed scope \u00b7 Starting \u20B920,000'
   },
   {
     id: 3,
@@ -26,7 +40,14 @@ const services = [
     title: 'SaaS MVP Development',
     tag: '03',
     desc: 'From zero to a working, testable SaaS product in weeks. We handle architecture, UI/UX, auth, payments, and launch \u2014 so you can validate without waste.',
-    deliverables: ['MVP Build', 'Auth & Billing', 'Admin Dashboard', 'Launch Support']
+    deliverables: ['MVP Build', 'Auth & Billing', 'Admin Dashboard', 'Launch Support'],
+    techStack: ['Vue 3', 'React', 'Node.js', 'Supabase', 'Stripe', 'AWS', 'Docker', 'PostgreSQL'],
+    benefits: [
+      'Validate your idea with real users before burning cash on full-scale engineering.',
+      'Go from concept to launch in weeks with a battle-tested development framework.',
+      'Iterate faster with built-in analytics, feedback loops, and automated deploys.'
+    ],
+    engagementInfo: '6\u201312 weeks \u00b7 Fixed scope \u00b7 Starting \u20B950,000'
   },
   {
     id: 4,
@@ -34,7 +55,14 @@ const services = [
     title: 'Digital Growth Strategy',
     tag: '04',
     desc: 'Data-driven growth strategies and digital presence optimization. SEO, content systems, conversion-focused design, and analytics instrumentation.',
-    deliverables: ['SEO Architecture', 'Analytics Setup', 'Content Systems', 'Conversion Audit']
+    deliverables: ['SEO Architecture', 'Analytics Setup', 'Content Systems', 'Conversion Audit'],
+    techStack: ['Google Analytics 4', 'Google Search Console', 'SEMrush', 'Hotjar', 'Meta Ads', 'HubSpot', 'Segment'],
+    benefits: [
+      'Know exactly where your traffic comes from and what drives conversions.',
+      'Rank higher on search with a technical SEO audit and content roadmap.',
+      'Lower customer acquisition costs through targeted, data-driven campaigns.'
+    ],
+    engagementInfo: '2\u20136 weeks \u00b7 Retainer or project \u00b7 Starting \u20B915,000'
   },
   {
     id: 5,
@@ -42,7 +70,14 @@ const services = [
     title: 'Security & Code Review',
     tag: '05',
     desc: 'Identify vulnerabilities before they become incidents. We audit code, review auth flows, check third-party dependencies, and harden your deployment pipeline.',
-    deliverables: ['Code Audit', 'Auth Review', 'Dependency Check', 'Security Report']
+    deliverables: ['Code Audit', 'Auth Review', 'Dependency Check', 'Security Report'],
+    techStack: ['OWASP ZAP', 'SonarQube', 'Snyk', 'Burp Suite', 'ESLint', 'Docker Bench', 'TruffleHog'],
+    benefits: [
+      'Catch vulnerabilities early before they become costly data breaches.',
+      'Build customer trust with a security-first approach to your product.',
+      'Meet compliance requirements for data protection and privacy regulations.'
+    ],
+    engagementInfo: '1\u20133 weeks \u00b7 Fixed scope \u00b7 Starting \u20B918,000'
   },
   {
     id: 6,
@@ -50,7 +85,14 @@ const services = [
     title: 'Automation & Integration',
     tag: '06',
     desc: 'Connect your tools and eliminate manual work. We build Zapier-style workflows, API integrations, webhook systems, and backend automation scripts.',
-    deliverables: ['API Integration', 'Workflow Automation', 'Webhook Systems', 'Cron Jobs']
+    deliverables: ['API Integration', 'Workflow Automation', 'Webhook Systems', 'Cron Jobs'],
+    techStack: ['Python', 'n8n', 'Make', 'Zapier', 'Node.js', 'PostgreSQL', 'Redis', 'AWS Lambda'],
+    benefits: [
+      'Eliminate hours of manual data entry by connecting your existing tools.',
+      'Reduce human error in critical workflows with automated validation checks.',
+      'Get real-time alerts and reports without logging into multiple dashboards.'
+    ],
+    engagementInfo: '1\u20134 weeks \u00b7 Fixed scope \u00b7 Starting \u20B912,000'
   }
 ]
 
@@ -113,7 +155,8 @@ onMounted(() => {
         <Transition name="accordion">
           <div v-show="activeService === service.id" class="pb-10 pl-14">
             <p class="text-neutral-600 max-w-2xl text-lg leading-relaxed mb-8">{{ service.desc }}</p>
-            <div class="flex flex-wrap gap-3">
+
+            <div class="flex flex-wrap gap-3 mb-8">
               <span
                 v-for="item in service.deliverables"
                 :key="item"
@@ -121,6 +164,43 @@ onMounted(() => {
               >
                 {{ item }}
               </span>
+            </div>
+
+            <hr class="border-neutral-200 mb-6" />
+
+            <div class="mb-6">
+              <h4 class="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">Tech Stack</h4>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="tech in service.techStack"
+                  :key="tech"
+                  class="font-mono bg-neutral-100 px-2 py-1 text-xs text-neutral-700 border border-neutral-200"
+                >
+                  {{ tech }}
+                </span>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <h4 class="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3">Key Benefits</h4>
+              <ul class="space-y-2">
+                <li
+                  v-for="(benefit, i) in service.benefits"
+                  :key="i"
+                  class="flex items-start gap-2 text-sm text-neutral-600"
+                >
+                  <Check class="w-4 h-4 text-tech mt-0.5 shrink-0" />
+                  <span>{{ benefit }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2">Engagement</h4>
+              <div class="flex items-center gap-2 text-xs font-mono text-neutral-500">
+                <Clock class="w-3.5 h-3.5" />
+                <span>{{ service.engagementInfo }}</span>
+              </div>
             </div>
           </div>
         </Transition>
@@ -154,6 +234,6 @@ onMounted(() => {
 }
 .accordion-enter-to, .accordion-leave-from {
   opacity: 1;
-  max-height: 400px;
+  max-height: 1200px;
 }
 </style>
