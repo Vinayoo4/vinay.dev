@@ -54,7 +54,7 @@ onMounted(() => {
     </section>
 
     <!-- Ventures -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 px-6 py-24 max-w-7xl mx-auto">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 px-6 py-24 max-w-7xl mx-auto">
       <router-link to="/studio" class="hero-text group relative overflow-hidden bg-background border border-neutral-200 p-10 md:p-14 hover:border-tech transition-colors duration-500 min-h-[380px] flex flex-col justify-between">
         <div class="absolute inset-0 bg-tech/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
         <div class="relative z-10">
@@ -67,7 +67,7 @@ onMounted(() => {
         </div>
       </router-link>
 
-      <router-link to="/triu" class="hero-text group relative overflow-hidden bg-background border border-neutral-200 p-10 md:p-14 hover:border-naturals transition-colors duration-500 min-h-[380px] flex flex-col justify-between md:mt-24">
+      <router-link to="/triu" class="hero-text group relative overflow-hidden bg-background border border-neutral-200 p-10 md:p-14 hover:border-naturals transition-colors duration-500 min-h-[380px] flex flex-col justify-between">
         <div class="absolute inset-0 bg-naturals/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
         <div class="relative z-10">
           <div class="text-xs font-mono uppercase tracking-widest text-naturals mb-4">02 — Products</div>
@@ -76,6 +76,18 @@ onMounted(() => {
         </div>
         <div class="relative z-10 flex items-center gap-2 text-sm uppercase tracking-widest mt-12 font-medium text-naturals opacity-0 group-hover:opacity-100 transition-opacity">
           Explore Catalog <ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+        </div>
+      </router-link>
+
+      <router-link to="/studio" class="hero-text group relative overflow-hidden bg-background border border-neutral-200 p-10 md:p-14 hover:border-marketing transition-colors duration-500 min-h-[380px] flex flex-col justify-between">
+        <div class="absolute inset-0 bg-marketing/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+        <div class="relative z-10">
+          <div class="text-xs font-mono uppercase tracking-widest text-marketing mb-4">03 — Marketing</div>
+          <h2 class="font-serif text-4xl md:text-5xl mb-6">Shri Nandi Marketing</h2>
+          <p class="text-neutral-500 max-w-md leading-relaxed">Data-driven growth, digital presence, and brand strategy for businesses ready to scale. Powered by field-tested marketing operations.</p>
+        </div>
+        <div class="relative z-10 flex items-center gap-2 text-sm uppercase tracking-widest mt-12 font-medium text-marketing opacity-0 group-hover:opacity-100 transition-opacity">
+          View Services <ArrowRight class="w-4 h-4 group-hover:translate-x-2 transition-transform" />
         </div>
       </router-link>
     </section>

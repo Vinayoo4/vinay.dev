@@ -21,6 +21,8 @@ const fieldErrors = ref({
   message: ''
 })
 
+const showDbFallback = ref(false)
+
 const validateField = (field: keyof typeof fieldErrors.value) => {
   fieldErrors.value[field] = ''
 
@@ -69,7 +71,11 @@ const handleSubmit = async () => {
     return
   }
 
+  showDbFallback.value = false
   await submitLead(formData.value)
+  if (error.value && (error.value.includes('could not be found') || error.value.includes('Database'))) {
+    showDbFallback.value = true
+  }
   if (success.value) {
     formData.value = {
       name: '',
@@ -96,7 +102,12 @@ const handleSubmit = async () => {
     </div>
 
     <form v-else @submit.prevent="handleSubmit" class="space-y-6">
-      <div v-if="error" class="p-4 bg-red-50 border border-red-200 text-red-600 text-sm">
+      <div v-if="showDbFallback" class="p-4 bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+        Our inquiry system is being set up. Please reach us via
+        <a href="#contact-platforms" class="underline font-medium">WhatsApp or email using the options below</a>.
+      </div>
+
+      <div v-else-if="error" class="p-4 bg-red-50 border border-red-200 text-red-600 text-sm">
         {{ error }}
       </div>
 

@@ -1,13 +1,26 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import { X } from 'lucide-vue-next'
-import { watch } from 'vue'
+import { X, MessageCircle, Mail, ShoppingBag, Store, FileText } from 'lucide-vue-next'
+import { watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const store = useProductsStore()
 const router = useRouter()
 
-const handleInquire = () => {
+const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '917355534385'
+const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'hello@saltedhash.in'
+
+const whatsappUrl = computed(() => {
+  const name = store.selectedProduct?.name || ''
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi I am interested in ' + name)}`
+})
+
+const emailUrl = computed(() => {
+  const name = store.selectedProduct?.name || ''
+  return `mailto:${contactEmail}?subject=${encodeURIComponent('Inquiry: ' + name)}`
+})
+
+const handleFormInquire = () => {
   store.closeProductPanel()
   router.push({
     path: '/contact',
@@ -15,7 +28,6 @@ const handleInquire = () => {
   })
 }
 
-// Prevent body scroll when panel is open
 watch(() => store.isPanelOpen, (isOpen) => {
   if (isOpen) {
     document.body.style.overflow = 'hidden'
@@ -27,7 +39,6 @@ watch(() => store.isPanelOpen, (isOpen) => {
 
 <template>
   <Teleport to="body">
-    <!-- Backdrop -->
     <Transition
       enter-active-class="transition-opacity duration-300 ease-in-out"
       enter-from-class="opacity-0"
@@ -43,7 +54,6 @@ watch(() => store.isPanelOpen, (isOpen) => {
       ></div>
     </Transition>
 
-    <!-- Slide-in Panel -->
     <Transition
       enter-active-class="transition-transform duration-500 ease-out"
       enter-from-class="translate-x-full"
@@ -89,12 +99,57 @@ watch(() => store.isPanelOpen, (isOpen) => {
           </div>
         </div>
 
-        <div class="sticky bottom-0 p-6 bg-[#FAFAFA] border-t border-neutral-200">
-          <button
-            @click="handleInquire"
-            class="w-full bg-neutral-900 text-white font-medium py-4 px-8 hover:bg-neutral-800 transition-colors uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+        <div class="sticky bottom-0 p-6 bg-[#FAFAFA] border-t border-neutral-200 flex flex-col gap-3">
+          <div class="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 mb-1">Buy or Inquire</div>
+
+          <a
+            :href="whatsappUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-[#25D366] text-white font-medium py-3.5 px-8 hover:opacity-90 transition-all duration-200 uppercase tracking-wider text-sm flex items-center justify-center gap-2"
           >
-            Inquire About This
+            <MessageCircle class="w-4 h-4" />
+            WhatsApp Order
+          </a>
+
+          <a
+            :href="emailUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-tech text-white font-medium py-3.5 px-8 hover:opacity-90 transition-all duration-200 uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+          >
+            <Mail class="w-4 h-4" />
+            Email Inquiry
+          </a>
+
+          <a
+            v-if="store.selectedProduct.flipkartUrl"
+            :href="store.selectedProduct.flipkartUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full border border-[#2874F0] text-[#2874F0] font-medium py-3 px-8 hover:bg-[#2874F0]/5 transition-all duration-200 uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+          >
+            <ShoppingBag class="w-4 h-4" />
+            View on Flipkart
+          </a>
+
+          <a
+            v-if="store.selectedProduct.meeshoUrl"
+            :href="store.selectedProduct.meeshoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full border border-[#E91E63] text-[#E91E63] font-medium py-3 px-8 hover:bg-[#E91E63]/5 transition-all duration-200 uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+          >
+            <Store class="w-4 h-4" />
+            View on Meesho
+          </a>
+
+          <button
+            @click="handleFormInquire"
+            class="w-full border border-neutral-300 text-neutral-600 font-medium py-3 px-8 hover:bg-neutral-100 transition-colors uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+          >
+            <FileText class="w-4 h-4" />
+            Inquire via Form
           </button>
         </div>
       </div>

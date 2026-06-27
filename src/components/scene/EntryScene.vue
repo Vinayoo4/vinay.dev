@@ -17,31 +17,32 @@ const gl = {
   toneMapping: NoToneMapping,
 }
 
-// Map specific categories to exact positions in the 3D corridor
-// Positions are laid out along the Z axis (negative goes deeper into screen)
-const categoryPositions: Record<string, [number, number, number]> = {
-  'stationery': [-4, 0, -10],
-  'natural': [4, 2, -15],
-  'educational': [-3, -2, -20],
-  'gardening': [5, -1, -25],
-  'digital': [0, 3, -30]
-}
+const positions: [number, number, number][] = [
+  [-4, 0, -12],
+  [4, 1, -17],
+  [-2, -1, -22],
+  [5, 2, -27],
+  [0, 0, -32]
+]
 
 const displayProducts = computed(() => {
-  // Take one product per category to display as the main billboard
-  const categories = new Set()
+  const usingFallback = store.products.length > 0 && store.products[0].$id?.startsWith('fallback-')
+
+  if (usingFallback) {
+    return store.products.slice(0, 5)
+  }
+
+  const seen = new Set<string>()
   return store.products.filter(p => {
-    const category = p.category || 'uncategorized'
-    if (!categories.has(category)) {
-      categories.add(category)
-      return true
-    }
-    return false
-  })
+    const cat = p.category || 'uncategorized'
+    if (seen.has(cat)) return false
+    seen.add(cat)
+    return true
+  }).slice(0, 5)
 })
 
-const getPosition = (category: string): [number, number, number] => {
-  return categoryPositions[category] || [0, 0, -10]
+const getPosition = (index: number): [number, number, number] => {
+  return positions[index] || [0, 0, -12]
 }
 </script>
 
@@ -50,7 +51,6 @@ const getPosition = (category: string): [number, number, number] => {
     <TresCanvas v-bind="gl">
       <CameraRig />
 
-      <!-- Scene Lighting -->
       <TresAmbientLight :intensity="0.2" color="#ffffff" />
       <TresDirectionalLight
         :position="[5, 5, 5]"
@@ -64,15 +64,13 @@ const getPosition = (category: string): [number, number, number] => {
         :distance="20"
       />
 
-      <!-- Dark Corridor Environment -->
       <TresFog color="#000000" :near="1" :far="40" />
 
-      <!-- Product Billboards -->
       <ProductCard3D
-        v-for="product in displayProducts"
+        v-for="(product, index) in displayProducts"
         :key="product.$id"
         :product="product"
-        :position="getPosition(product.category || 'uncategorized')"
+        :position="getPosition(index)"
       />
     </TresCanvas>
   </div>
