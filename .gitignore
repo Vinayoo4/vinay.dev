@@ -5,25 +5,32 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
+# Runtime
 node_modules
 dist
 dist-ssr
 *.local
+
+# Environment - NEVER COMMIT THESE
 .env
+.env.*
+!.env.example
+
+# Build info
+*.tsbuildinfo
 .next/
 out/
 
-# Editor directories and files
+# OS
+.DS_Store
+
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.env.local
-*.tsbuildinfo

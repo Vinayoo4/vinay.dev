@@ -81,7 +81,7 @@ export function useProducts() {
 
   const getImageUrl = (imageFileId: string) => {
     if (!imageFileId) return ''
-    return storage.getFileView(bucketId, imageFileId).toString()
+    return storage.getFilePreview(bucketId, imageFileId).toString()
   }
 
   return {

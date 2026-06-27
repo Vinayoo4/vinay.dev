@@ -4,18 +4,19 @@ import { RouterView } from 'vue-router'
 import NavBar from '@/components/ui/NavBar.vue'
 import ProductPanel from '@/components/ui/ProductPanel.vue'
 import InstallPrompt from '@/components/pwa/InstallPrompt.vue'
-import Footer from '@/components/Footer.vue'
 import UpdateBanner from '@/components/pwa/UpdateBanner.vue'
+import { useProductsStore } from '@/stores/products'
 
 const isOnline = ref(navigator.onLine)
+const store = useProductsStore()
 
-const updateOnlineStatus = () => {
-  isOnline.value = navigator.onLine
-}
+const updateOnlineStatus = () => { isOnline.value = navigator.onLine }
 
 onMounted(() => {
   window.addEventListener('online', updateOnlineStatus)
   window.addEventListener('offline', updateOnlineStatus)
+  // Initialize product data globally once
+  store.fetchProducts()
 })
 
 onUnmounted(() => {
@@ -29,28 +30,28 @@ provide('isOnline', isOnline)
 <template>
   <UpdateBanner />
   <NavBar :is-online="isOnline" />
-  <RouterView />
-  <Footer />
+  <RouterView v-slot="{ Component, route }">
+    <Transition name="page" mode="out-in">
+      <component :is="Component" :key="route.path" />
+    </Transition>
+  </RouterView>
   <ProductPanel />
   <InstallPrompt />
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
-html {
-  font-family: 'Inter', sans-serif;
-  background-color: #FAFAFA;
-  color: #111827;
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-h1, h2, h3, h4, h5, h6, .font-serif {
-  font-family: 'Cormorant Garamond', serif;
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
 }
-
-/* Base styles to prevent scrollbar jump when panel opens */
-body {
-  width: 100vw;
-  overflow-x: hidden;
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 </style>
