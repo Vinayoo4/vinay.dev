@@ -5,32 +5,45 @@
   --color-foreground: #111827;
   --color-tech: #233CB5;
   --color-naturals: #2F4F2F;
-  --font-serif: "Playfair Display", "Cormorant", serif;
-  --font-sans: "Inter", "DM Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  width: 100vw;
+  overflow-x: hidden;
+  min-height: 100dvh;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
 }
 
-.text-tech {
-  color: var(--color-tech);
-}
+.text-tech { color: var(--color-tech); }
+.bg-tech { background-color: var(--color-tech); }
+.border-tech { border-color: var(--color-tech); }
+.text-naturals { color: var(--color-naturals); }
+.bg-naturals { background-color: var(--color-naturals); }
+.border-naturals { border-color: var(--color-naturals); }
+.text-foreground { color: var(--color-foreground); }
+.bg-background { background-color: var(--color-background); }
 
-.bg-tech {
-  background-color: var(--color-tech);
-}
-
-.text-naturals {
-  color: var(--color-naturals);
-}
-
-.bg-naturals {
-  background-color: var(--color-naturals);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }

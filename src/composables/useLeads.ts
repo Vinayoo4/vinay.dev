@@ -4,11 +4,11 @@ import { ID } from 'appwrite'
 import { useAppwrite } from './useAppwrite'
 
 export interface Lead {
-  name: string;
-  phone: string;
-  email?: string;
-  productInterest?: string;
-  message?: string;
+  name: string
+  phone: string
+  email?: string
+  productInterest?: string
+  message?: string
 }
 
 export function useLeads() {
@@ -18,6 +18,10 @@ export function useLeads() {
   const success = ref(false)
 
   const submitLead = async (leadData: Lead) => {
+    if (!databaseId || !leadsCollectionId) {
+      error.value = 'Contact system not configured. Please email us directly.'
+      return
+    }
     loading.value = true
     error.value = null
     success.value = false
@@ -26,23 +30,17 @@ export function useLeads() {
         databaseId,
         leadsCollectionId,
         ID.unique(),
-        {
-          ...leadData
-        }
+        { ...leadData, createdAt: new Date().toISOString() }
       )
       success.value = true
-    } catch (err: any) {
-      error.value = err.message || 'Failed to submit lead'
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to submit'
+      error.value = msg
       logger.error('Error submitting lead:', err)
     } finally {
       loading.value = false
     }
   }
 
-  return {
-    submitLead,
-    loading,
-    error,
-    success
-  }
+  return { submitLead, loading, error, success }
 }
