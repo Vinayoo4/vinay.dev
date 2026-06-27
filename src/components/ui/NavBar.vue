@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Menu, X } from '@lucide/vue'
+import { Menu, X } from 'lucide-vue-next'
 import { ref, inject } from 'vue'
 
 defineProps<{

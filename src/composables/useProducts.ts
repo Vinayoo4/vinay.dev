@@ -79,9 +79,13 @@ export function useProducts() {
     }
   }
 
-  const getImageUrl = (imageFileId: string) => {
-    if (!imageFileId) return ''
-    return storage.getFilePreview(bucketId, imageFileId).toString()
+  const getImageUrl = (imageFileId: string): string => {
+    if (!imageFileId || !bucketId) return ''
+    try {
+      return storage.getFilePreview(bucketId, imageFileId, 800, 800).toString()
+    } catch {
+      return ''
+    }
   }
 
   return {

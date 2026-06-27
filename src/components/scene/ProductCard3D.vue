@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { logger } from '@/utils/logger'
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useTresContext } from '@tresjs/core'
+import { ref, onMounted } from 'vue'
+import { useTresContext, useLoop } from '@tresjs/core'
 import { TextureLoader, DoubleSide, Color } from 'three'
 import type { PerspectiveCamera } from 'three'
 import { useProductsStore } from '@/stores/products'
 import type { Product } from '@/composables/useProducts'
-import anime from 'animejs'
 
 const props = defineProps<{
   product: Product;
@@ -17,13 +16,14 @@ const store = useProductsStore()
 const meshRef = ref()
 const materialRef = ref()
 const { camera } = useTresContext()
-let animationFrameId: number | null = null
+const { onBeforeRender } = useLoop()
 
 onMounted(async () => {
   if (props.product.imageFileId) {
     const textureLoader = new TextureLoader()
     try {
       const textureUrl = store.getImageUrl(props.product.imageFileId)
+      if (!textureUrl) return
       const texture = await textureLoader.loadAsync(textureUrl)
       if (materialRef.value) {
         materialRef.value.map = texture
@@ -33,51 +33,38 @@ onMounted(async () => {
       logger.error('Error loading texture', e)
     }
   }
-
-  // Entrance animation
-  if (meshRef.value) {
-    // Initial hidden state
-    meshRef.value.position.set(props.position[0], props.position[1] - 5, props.position[2])
-    meshRef.value.scale.set(0, 0, 0)
-
-    anime({
-      targets: meshRef.value.position,
-      y: props.position[1],
-      duration: 1500,
-      delay: Math.abs(props.position[2]) * 100, // Delay based on depth
-      easing: 'easeOutElastic(1, .8)'
-    })
-
-    anime({
-      targets: meshRef.value.scale,
-      x: 1,
-      y: 1,
-      z: 1,
-      duration: 1000,
-      delay: Math.abs(props.position[2]) * 100,
-      easing: 'easeOutBack'
-    })
-  }
-
-  // Render loop using rAF
-  const renderLoop = () => {
-    const cam = (camera && 'value' in camera ? camera.value : camera) as PerspectiveCamera | undefined
-    if (meshRef.value && cam) {
-      // Billboard behavior: always face camera
-      meshRef.value.lookAt(cam.position)
-
-      // Subtle floating animation
-      const time = Date.now() * 0.001
-      meshRef.value.position.y = props.position[1] + Math.sin(time * 2 + props.position[0]) * 0.2
-    }
-    animationFrameId = requestAnimationFrame(renderLoop)
-  }
-  animationFrameId = requestAnimationFrame(renderLoop)
 })
 
-onUnmounted(() => {
-  if (animationFrameId !== null) {
-    cancelAnimationFrame(animationFrameId)
+onBeforeRender(({ elapsed }) => {
+  const entryDuration = 1.5
+  const progress = Math.min(elapsed / entryDuration, 1)
+
+  if (!meshRef.value) return
+
+  const cam = (camera && 'value' in camera ? camera.value : camera) as PerspectiveCamera | undefined
+
+  if (progress < 1) {
+    const easeOutBack = (t: number) => {
+      const c = 1.70158
+      return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2)
+    }
+    const easeOutElastic = (t: number) => {
+      if (t === 0 || t === 1) return t
+      return Math.pow(2, -10 * t) * Math.sin((t - 0.075) * (2 * Math.PI) / 0.3) + 1
+    }
+    const yOff = (1 - easeOutElastic(progress)) * 5
+    meshRef.value.position.set(props.position[0], props.position[1] - yOff, props.position[2])
+    const s = easeOutBack(progress)
+    meshRef.value.scale.set(s, s, s)
+  } else {
+    meshRef.value.position.set(props.position[0], props.position[1], props.position[2])
+    meshRef.value.scale.set(1, 1, 1)
+  }
+
+  if (cam && cam.position) {
+    meshRef.value.lookAt(cam.position)
+    const time = elapsed
+    meshRef.value.position.y = meshRef.value.position.y + Math.sin(time * 2 + props.position[0]) * 0.2 * (progress >= 1 ? 1 : 0)
   }
 })
 
@@ -87,26 +74,10 @@ const handleClick = () => {
 
 const handlePointerOver = () => {
   document.body.style.cursor = 'pointer'
-  if (materialRef.value) {
-    anime({
-      targets: materialRef.value.color,
-      r: 1.5, g: 1.5, b: 1.5, // Brighten
-      duration: 300,
-      easing: 'easeOutQuad'
-    })
-  }
 }
 
 const handlePointerOut = () => {
   document.body.style.cursor = 'default'
-  if (materialRef.value) {
-    anime({
-      targets: materialRef.value.color,
-      r: 1, g: 1, b: 1, // Restore
-      duration: 300,
-      easing: 'easeOutQuad'
-    })
-  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import anime from 'animejs'
-import { ArrowLeft } from '@lucide/vue'
+import { ArrowLeft } from 'lucide-vue-next'
 
 onMounted(() => {
   anime({
