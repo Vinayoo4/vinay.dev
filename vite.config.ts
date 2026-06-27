@@ -32,12 +32,12 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['favicon.svg', 'offline.html', 'icons/*.png'],
+      includeAssets: ['favicon.svg', 'icons/*.png'],
       workbox: {
         cleanupOutdatedCaches: true,
         globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2,woff,ttf}'],
         navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/api/, /\.png$/, /\.svg$/],
+        navigateFallbackDenylist: [/^\/api/, /\.png$/, /\.svg$/, /\.ico$/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fra\.cloud\.appwrite\.io/,
