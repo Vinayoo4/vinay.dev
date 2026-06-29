@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useProducts, type Product } from '@/composables/useProducts'
 
 export const useProductsStore = defineStore('products', () => {
-  const { products, loading, error, fetchProducts, getImageUrl } = useProducts()
+  const { products, fallbackProducts, loading, error, fetchProducts, getImageUrl } = useProducts()
 
   const selectedProduct = ref<Product | null>(null)
   const isPanelOpen = ref(false)
@@ -25,6 +25,7 @@ export const useProductsStore = defineStore('products', () => {
 
   return {
     products,
+    fallbackProducts,
     loading,
     error,
     fetchProducts,
