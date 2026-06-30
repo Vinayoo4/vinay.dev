@@ -53,8 +53,39 @@ onMounted(() => {
       </button>
     </div>
 
-    <div v-else-if="store.products.length === 0" class="text-center py-24 triu-element">
-      <p class="text-foreground text-lg">Catalog coming soon.</p>
+    <div v-else-if="store.products.length === 0" class="triu-element">
+      <div class="text-center py-24 border border-foreground/10 bg-background/50 mb-16">
+        <p class="text-foreground text-xl font-serif mb-2">No products found</p>
+        <p class="text-foreground/60 text-sm">Our live catalog is currently empty or unavailable.</p>
+      </div>
+
+      <div class="pt-16 border-t border-foreground/10">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-serif mb-4">Demo Showcase Catalog</h2>
+          <p class="text-foreground/60">Explore our sample products (Fallback data)</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            v-for="product in store.fallbackProducts"
+            :key="product.$id"
+            @click="store.openProductPanel(product)"
+            class="group border border-foreground/10 p-8 md:p-12 hover:border-naturals transition-colors duration-500 bg-background cursor-pointer"
+          >
+            <div class="text-xs font-mono uppercase tracking-widest text-naturals mb-12">{{ product.category }}</div>
+            <div class="w-full aspect-square bg-neutral-100 border border-neutral-200 overflow-hidden mb-8 flex items-center justify-center text-neutral-400">
+              [ Demo Image ]
+            </div>
+            <h3 class="text-3xl mb-2 font-serif">{{ product.name }}</h3>
+            <div class="text-xl mb-4 font-medium text-foreground">₹{{ product.price.toFixed(2) }}</div>
+            <p class="text-foreground/70 mb-6">{{ product.description }}</p>
+            <div class="flex flex-wrap gap-2">
+              <a v-if="product.flipkartUrl" :href="product.flipkartUrl" target="_blank" @click.stop class="text-xs bg-blue-50 text-blue-600 px-3 py-1 hover:bg-blue-100 transition-colors">Flipkart</a>
+              <a v-if="product.meeshoUrl" :href="product.meeshoUrl" target="_blank" @click.stop class="text-xs bg-pink-50 text-pink-600 px-3 py-1 hover:bg-pink-100 transition-colors">Meesho</a>
+              <button @click.stop class="text-xs bg-green-50 text-green-600 px-3 py-1 hover:bg-green-100 transition-colors">WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">

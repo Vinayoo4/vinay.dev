@@ -65,8 +65,8 @@ export function useProducts() {
     error.value = null
 
     if (!databaseId || !productsCollectionId) {
-      logger.warn('Missing Appwrite configuration. Using fallback product data.')
-      products.value = fallbackProducts
+      logger.warn('Missing Appwrite configuration. Expected empty state.')
+      products.value = []
       loading.value = false
       return
     }
@@ -77,8 +77,8 @@ export function useProducts() {
       ])
       products.value = response.documents as unknown as Product[]
     } catch (err: any) {
-      logger.error('Error fetching products, using fallback:', err)
-      products.value = fallbackProducts
+      logger.error('Error fetching products:', err)
+      products.value = []
     } finally {
       loading.value = false
     }
@@ -95,6 +95,7 @@ export function useProducts() {
 
   return {
     products,
+    fallbackProducts,
     loading,
     error,
     fetchProducts,

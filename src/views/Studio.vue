@@ -128,6 +128,13 @@ onMounted(() => {
       </p>
     </div>
 
+    <div class="studio-element opacity-0 mb-20 max-w-4xl">
+      <h2 class="text-3xl md:text-5xl font-serif mb-6">Approach</h2>
+      <p class="text-lg md:text-xl text-neutral-600 font-light leading-relaxed">
+        We are a problem-first, logic-led venture studio. We start by identifying real business pain points, rapidly validate hypotheses, and architect scalable solutions. Our process transforms validated concepts into production-grade systems engineered for growth, security, and performance.
+      </p>
+    </div>
+
     <div class="border-t border-neutral-200">
       <div
         v-for="service in services"
